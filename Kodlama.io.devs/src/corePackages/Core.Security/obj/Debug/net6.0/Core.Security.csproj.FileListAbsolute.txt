@@ -1,0 +1,15 @@
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\bin\Debug\net6.0\Core.Security.deps.json
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\bin\Debug\net6.0\Core.Security.dll
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\bin\Debug\net6.0\Core.Security.pdb
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\bin\Debug\net6.0\Core.Persistence.dll
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\bin\Debug\net6.0\Core.Persistence.pdb
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.csproj.AssemblyReference.cache
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.AssemblyInfoInputs.cache
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.AssemblyInfo.cs
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.csproj.CoreCompileInputs.cache
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.csproj.CopyComplete
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.dll
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\refint\Core.Security.dll
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\Core.Security.pdb
+C:\Users\DincF\Documents\GitHub\Kodlama.io-devs\Kodlama.io.devs\src\corePackages\Core.Security\obj\Debug\net6.0\ref\Core.Security.dll
