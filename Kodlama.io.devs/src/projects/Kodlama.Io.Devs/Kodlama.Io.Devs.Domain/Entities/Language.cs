@@ -14,7 +14,6 @@ namespace Kodlama.Io.Devs.Domain.Entities
         {
             Id = id;
             Name = name;
-            CreateDate = DateTime.Now;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
             Configuration = configuration;
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
