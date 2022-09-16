@@ -28,8 +28,8 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage
             {
                 await _languageBusinessRules.LanguageShouldBeExistWhenRequested(request.Id);
 
-                Language mappedLanguage = _mapper.Map<Language>(request);
-                Language deletedLanguage = await _languageRepository.DeleteAsync(mappedLanguage);
+                Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id);
+                Language deletedLanguage = await _languageRepository.DeleteAsync(language);
                 DeletedLanguageDto deletedLanguageDto = _mapper.Map<DeletedLanguageDto>(deletedLanguage);
 
                 return deletedLanguageDto;

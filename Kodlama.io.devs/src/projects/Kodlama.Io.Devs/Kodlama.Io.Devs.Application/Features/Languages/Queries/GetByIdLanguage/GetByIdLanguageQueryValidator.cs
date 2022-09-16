@@ -7,6 +7,7 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetByIdLanguage
         public GetByIdLanguageQueryValidator()
         {
             RuleFor(l => l.Id).NotEmpty();
+            RuleFor(l => l.Id).NotNull();
             RuleFor(l => l.Id).GreaterThan(0);
         }
     }

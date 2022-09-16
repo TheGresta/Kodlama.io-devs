@@ -16,11 +16,10 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Profiles
             CreateMap<Language, CreateLanguageCommand>().ReverseMap();
             CreateMap<Language, CreatedLanguageDto>().ReverseMap();
 
-            CreateMap<Language, DeleteLanguageCommand>().ReverseMap();
             CreateMap<Language, DeletedLanguageDto>().ReverseMap();
 
-            CreateMap<Language, UpdateLanguageCommand>().ReverseMap();
             CreateMap<Language, UpdatedLanguageDto>().ReverseMap();
+            CreateMap<Language, UpdateLanguageCommand>().ReverseMap();
 
             CreateMap<Language, GetByIdLanguageDto>().ReverseMap();
 

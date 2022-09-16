@@ -30,7 +30,7 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Rules
 
         public async Task ShouldBeSomeDataInTheLanguageTableWhenRequested(IPaginate<Language> languages)
         {
-            if (languages.Items.Any()) throw new BusinessException(_messages.LanguageDataNotExist);
+            if (!languages.Items.Any()) throw new BusinessException(_messages.LanguageDataNotExist);
         }
     }
 }

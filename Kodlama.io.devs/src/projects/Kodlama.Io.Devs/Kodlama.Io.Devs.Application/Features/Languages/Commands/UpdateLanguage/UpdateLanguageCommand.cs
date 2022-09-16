@@ -30,8 +30,11 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.UpdateLanguage
                 await _languageBusinessRules.LanguageNameCanNotBeDuplicatedWhenInsertedOrUpdated(request.Name);
                 await _languageBusinessRules.LanguageShouldBeExistWhenRequested(request.Id);
 
-                Language mappedLanguage = _mapper.Map<Language>(request);
-                Language updatedLanguage = await _languageRepository.UpdateAsync(mappedLanguage);
+                Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id);
+
+                _mapper.Map(request, language);
+
+                Language updatedLanguage = await _languageRepository.UpdateAsync(language);
                 UpdatedLanguageDto updatedLanguageDto = _mapper.Map<UpdatedLanguageDto>(updatedLanguage);
 
                 return updatedLanguageDto;

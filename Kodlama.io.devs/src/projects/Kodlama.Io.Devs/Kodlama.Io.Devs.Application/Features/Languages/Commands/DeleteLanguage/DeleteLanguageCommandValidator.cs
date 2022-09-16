@@ -7,6 +7,7 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage
         public DeleteLanguageCommandValidator()
         {
             RuleFor(l => l.Id).NotEmpty();
+            RuleFor(l => l.Id).NotNull();
             RuleFor(l => l.Id).GreaterThan(0);
         }
     }
