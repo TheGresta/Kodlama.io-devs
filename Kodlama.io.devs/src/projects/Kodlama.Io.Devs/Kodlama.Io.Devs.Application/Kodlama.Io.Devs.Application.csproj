@@ -14,8 +14,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\corePackages\Core.Application\Core.Application.csproj" />
-    <ProjectReference Include="..\..\..\corePackages\Core.CrossCuttingConcerns\Core.CrossCuttingConcerns.csproj" />
+    <ProjectReference Include="..\..\..\corePackages\Core.Persistence\Core.Persistence.csproj" />
     <ProjectReference Include="..\Kodlama.Io.Devs.Domain\Kodlama.Io.Devs.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\OperationClaims\Commands\DeleteOperationClaim\" />
+    <Folder Include="Features\OperationClaims\Commands\UpdateOperationClaim\" />
+    <Folder Include="Features\OperationClaims\Queries\GetByIdOperationClaim\" />
+    <Folder Include="Features\OperationClaims\Queries\GetListOperationClaim\" />
+    <Folder Include="Features\OperationClaims\Rules\" />
   </ItemGroup>
 
 </Project>
