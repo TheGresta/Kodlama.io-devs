@@ -1,4 +1,10 @@
 ﻿using AutoMapper;
+using Core.Persistence.Paging;
+using Core.Security.Entities;
+using Kodlama.Io.Devs.Application.Features.OperationClaims.Commands.CreateOperationClaim;
+using Kodlama.Io.Devs.Application.Features.OperationClaims.Commands.UpdateOperationClaim;
+using Kodlama.Io.Devs.Application.Features.OperationClaims.Dtos;
+using Kodlama.Io.Devs.Application.Features.OperationClaims.Models;
 
 namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Profiles
 {
@@ -6,18 +12,18 @@ namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Profiles
     {
         public MappingProfiles()
         {
-            //CreateMap<Language, CreateLanguageCommand>().ReverseMap();
-            //CreateMap<Language, CreatedLanguageDto>().ReverseMap();
+            CreateMap<OperationClaim, CreateOperationClaimCommand>().ReverseMap();
+            CreateMap<OperationClaim, CreatedOperationClaimDto>().ReverseMap();
 
-            //CreateMap<Language, DeletedLanguageDto>().ReverseMap();
+            CreateMap<OperationClaim, DeletedOperationClaimDto>().ReverseMap();
 
-            //CreateMap<Language, UpdatedLanguageDto>().ReverseMap();
-            //CreateMap<Language, UpdateLanguageCommand>().ReverseMap();
+            CreateMap<OperationClaim, UpdatedOperationClaimDto>().ReverseMap();
+            CreateMap<OperationClaim, UpdateOperationClaimCommand>().ReverseMap();
 
-            //CreateMap<Language, GetByIdLanguageDto>().ReverseMap();
+            CreateMap<OperationClaim, GetByIdOperationClaimDto>().ReverseMap();
 
-            //CreateMap<Language, ListLanguageDto>().ReverseMap();
-            //CreateMap<IPaginate<Language>, LanguageListModel>().ReverseMap();
+            CreateMap<OperationClaim, ListOperationClaimDto>().ReverseMap();
+            CreateMap<IPaginate<OperationClaim>, OperationClaimListModel>().ReverseMap();
         }
     }
 }
