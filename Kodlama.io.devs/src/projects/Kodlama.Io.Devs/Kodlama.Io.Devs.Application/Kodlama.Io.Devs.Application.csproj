@@ -18,12 +18,4 @@
     <ProjectReference Include="..\Kodlama.Io.Devs.Domain\Kodlama.Io.Devs.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\OperationClaims\Commands\DeleteOperationClaim\" />
-    <Folder Include="Features\OperationClaims\Commands\UpdateOperationClaim\" />
-    <Folder Include="Features\OperationClaims\Queries\GetByIdOperationClaim\" />
-    <Folder Include="Features\OperationClaims\Queries\GetListOperationClaim\" />
-    <Folder Include="Features\OperationClaims\Rules\" />
-  </ItemGroup>
-
 </Project>
