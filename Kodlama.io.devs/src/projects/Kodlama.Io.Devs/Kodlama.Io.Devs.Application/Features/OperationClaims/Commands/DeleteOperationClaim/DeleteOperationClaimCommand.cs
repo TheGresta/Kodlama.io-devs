@@ -27,6 +27,7 @@ namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Commands.DeleteOp
             public async Task<DeletedOperationClaimDto> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
             {
                 await _operationClaimBusinessRules.OperationClaimShouldBeExistWhenRequested(request.Id);
+                await _operationClaimBusinessRules.UserOperationClaimShouldNotBeExistWhenTryingToDeleteOperationClaim(request.Id);
 
                 OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Id == request.Id);
                 OperationClaim deletedOperationClaim = await _operationClaimRepository.DeleteAsync(operationClaim);

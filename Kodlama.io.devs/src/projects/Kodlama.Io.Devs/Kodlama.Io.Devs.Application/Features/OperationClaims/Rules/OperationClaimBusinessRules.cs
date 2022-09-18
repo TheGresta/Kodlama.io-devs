@@ -9,11 +9,13 @@ namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Rules
     {
         private readonly IOperationClaimRepository _operationClaimRepository;
         private readonly OperationClaimBusinessRulesMessages _messages;
+        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
 
-        public OperationClaimBusinessRules(IOperationClaimRepository operationClaimRepository, OperationClaimBusinessRulesMessages messages)
+        public OperationClaimBusinessRules(IOperationClaimRepository operationClaimRepository, OperationClaimBusinessRulesMessages messages, IUserOperationClaimRepository userOperationClaimRepository)
         {
             _operationClaimRepository = operationClaimRepository;
             _messages = messages;
+            _userOperationClaimRepository = userOperationClaimRepository;
         }
 
         public async Task OperationClaimNameCanNotBeDuplicatedWhenInsertedOrUpdated(string name)
@@ -32,5 +34,12 @@ namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Rules
         {
             if (!operationClaims.Items.Any()) throw new BusinessException(_messages.OperationClaimDataNotExist);
         }
+
+        public async Task UserOperationClaimShouldNotBeExistWhenTryingToDeleteOperationClaim(int id)
+        {
+            UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(o => o.OperationClaimId == id);
+            if (userOperationClaim != null) throw new BusinessException(_messages.SomeUsersHaveThisOperationClaim);
+        }
+
     }
 }
