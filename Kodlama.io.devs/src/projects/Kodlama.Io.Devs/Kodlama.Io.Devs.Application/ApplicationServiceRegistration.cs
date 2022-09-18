@@ -20,6 +20,8 @@ namespace Application
             services.AddScoped<LanguageBusinessRulesMessages>();
             services.AddScoped<OperationClaimBusinessRules>();
             services.AddScoped<OperationClaimBusinessRulesMessages>();
+            services.AddScoped<UserOperationClaimBusinessRules>();
+            services.AddScoped<UserOperationClaimBusinessRulesMessages>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
