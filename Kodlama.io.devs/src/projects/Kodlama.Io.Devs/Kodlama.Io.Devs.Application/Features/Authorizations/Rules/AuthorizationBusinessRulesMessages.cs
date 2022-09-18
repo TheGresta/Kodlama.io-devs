@@ -1,4 +1,4 @@
-﻿namespace Kodlama.Io.Devs.Application.Features.Authorization.Rules
+﻿namespace Kodlama.Io.Devs.Application.Features.Authorizations.Rules
 {
     public class AuthorizationBusinessRulesMessages
     {

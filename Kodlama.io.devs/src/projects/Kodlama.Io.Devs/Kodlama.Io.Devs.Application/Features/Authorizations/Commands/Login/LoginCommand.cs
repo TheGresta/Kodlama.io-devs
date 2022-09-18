@@ -3,12 +3,12 @@ using Core.Persistence.Paging;
 using Core.Security.Dtos;
 using Core.Security.Entities;
 using Core.Security.JWT;
-using Kodlama.Io.Devs.Application.Features.Authorization.Rules;
+using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kodlama.Io.Devs.Application.Features.Authorization.Commands.Login
+namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Login
 {
     public partial class LoginCommand : IRequest<AccessToken>
     {

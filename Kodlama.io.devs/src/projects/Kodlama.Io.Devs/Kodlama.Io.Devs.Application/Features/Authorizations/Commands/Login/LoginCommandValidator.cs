@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Kodlama.Io.Devs.Application.Features.Authorization.Commands.Login
+namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Login
 {
     public class LoginCommandValidator : AbstractValidator<LoginCommand>
     {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Kodlama.Io.Devs.Application.Features.Authorization.Commands.Register
+namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
 {
     public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {

@@ -4,7 +4,7 @@ using Core.Security.Entities;
 using Core.Security.Hashing;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 
-namespace Kodlama.Io.Devs.Application.Features.Authorization.Rules
+namespace Kodlama.Io.Devs.Application.Features.Authorizations.Rules
 {
     public class AuthorizationBusinessRules
     {

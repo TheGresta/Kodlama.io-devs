@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Core.Security.Dtos;
 using Core.Security.JWT;
-using Kodlama.Io.Devs.Application.Features.Authorization.Rules;
+using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 
-namespace Kodlama.Io.Devs.Application.Features.Authorization.Commands.Register
+namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
 {
     public partial class RegisterCommand : IRequest<AccessToken>
     {

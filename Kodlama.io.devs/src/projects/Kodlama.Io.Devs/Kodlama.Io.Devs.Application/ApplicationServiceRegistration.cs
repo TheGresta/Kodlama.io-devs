@@ -6,7 +6,7 @@ using System.Reflection;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Features.OperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
-using Kodlama.Io.Devs.Application.Features.Authorization.Rules;
+using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
 
 namespace Application
 {
