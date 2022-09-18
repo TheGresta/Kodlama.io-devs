@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 
@@ -25,6 +26,8 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.Dele
 
             public async Task<DeletedUserOperationClaimDto> Handle(DeleteUserOperationClaimCommand request, CancellationToken cancellationToken)
             {
+                await _userOperationClaimBusinessRules.UserOperationClaimShouldBeExistWhenRequested(request.Id);
+
                 UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.Id == request.Id);
                 UserOperationClaim deletedUserOperationClaim = await _userOperationClaimRepository.DeleteAsync(userOperationClaim);
                 DeletedUserOperationClaimDto deletedUserOperationClaimDto = _mapper.Map<DeletedUserOperationClaimDto>(deletedUserOperationClaim);

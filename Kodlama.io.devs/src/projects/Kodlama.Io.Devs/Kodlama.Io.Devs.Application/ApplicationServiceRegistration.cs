@@ -5,6 +5,7 @@ using FluentValidation;
 using System.Reflection;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Features.OperationClaims.Rules;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 
 namespace Application
 {

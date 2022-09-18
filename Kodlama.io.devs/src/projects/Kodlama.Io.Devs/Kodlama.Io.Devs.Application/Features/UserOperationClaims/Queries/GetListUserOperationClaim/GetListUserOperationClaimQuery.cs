@@ -4,6 +4,7 @@ using Core.Persistence.Paging;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.OperationClaims.Models;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Models;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 
@@ -30,6 +31,8 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetLi
             {
                 IPaginate<UserOperationClaim>? userOperationClaims = 
                     await _userOperationClaimRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+
+                await _userOperationClaimBusinessRules.ShouldBeSomeDataInTheUserOperationClaimTableWhenRequested(userOperationClaims);
 
                 UserOperationClaimListModel mappedUserOperationClaimListModel = _mapper.Map<UserOperationClaimListModel>(userOperationClaims);
                 return mappedUserOperationClaimListModel;

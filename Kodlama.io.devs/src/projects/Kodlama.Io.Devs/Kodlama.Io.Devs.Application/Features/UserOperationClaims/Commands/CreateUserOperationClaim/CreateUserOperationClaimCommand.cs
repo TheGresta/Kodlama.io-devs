@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 
@@ -26,6 +27,11 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.Crea
 
             public async Task<CreatedUserOperationClaimDto> Handle(CreateUserOperationClaimCommand request, CancellationToken cancellationToken)
             {
+
+                await _userOperationClaimBusinessRules.UserOperationClaimCanNotBeDuplicatedWhenInsertedOrUpdated(request.UserId, request.OperationClaimId);
+                await _userOperationClaimBusinessRules.OperationClaimShouldBeExistWhenRequested(request.OperationClaimId);
+                await _userOperationClaimBusinessRules.UserShouldBeExistWhenRequested(request.UserId);
+
                 UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
                 UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
                 CreatedUserOperationClaimDto createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimDto>(createdUserOperationClaim);

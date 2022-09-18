@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 
@@ -11,7 +12,7 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetBy
     {
         public int Id { get; set; }
 
-        public class GetByIdUserOperationClaimQueryHandler : IRequestHandler<GetByIdOperationClaimQuery, GetByIdOperationClaimDto>
+        public class GetByIdUserOperationClaimQueryHandler : IRequestHandler<GetByIdUserOperationClaimQuery, GetByIdUserOperationClaimDto>
         {
             private readonly IUserOperationClaimRepository _userOperationClaimRepository;
             private readonly IMapper _mapper;
@@ -26,6 +27,8 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetBy
 
             public async Task<GetByIdUserOperationClaimDto> Handle(GetByIdUserOperationClaimQuery request, CancellationToken cancellationToken)
             {
+                await _userOperationClaimBusinessRules.UserOperationClaimShouldBeExistWhenRequested(request.Id);
+
                 UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.Id == request.Id);
                 GetByIdUserOperationClaimDto getByIdUserOperationClaimDto = _mapper.Map<GetByIdUserOperationClaimDto>(userOperationClaim);
 
