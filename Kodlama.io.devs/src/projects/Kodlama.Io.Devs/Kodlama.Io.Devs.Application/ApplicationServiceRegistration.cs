@@ -4,6 +4,7 @@ using Core.Application.Pipelines.Validation;
 using FluentValidation;
 using System.Reflection;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
+using Kodlama.Io.Devs.Application.Features.OperationClaims.Rules;
 
 namespace Application
 {
@@ -18,6 +19,7 @@ namespace Application
             services.AddScoped<LanguageBusinessRules>();
             services.AddScoped<LanguageBusinessRulesMessages>();
             services.AddScoped<OperationClaimBusinessRules>();
+            services.AddScoped<OperationClaimBusinessRulesMessages>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));

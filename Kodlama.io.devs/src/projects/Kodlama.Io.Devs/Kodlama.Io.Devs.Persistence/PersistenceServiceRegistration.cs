@@ -15,7 +15,8 @@ namespace Kodlama.Io.Devs.Persistence
             services.AddDbContext<BaseDbContext>(options =>
                                                      options.UseNpgsql(
                                                          configuration.GetConnectionString("PostgreSql")));
-            services.AddScoped<ILanguageRepository, LanguageRepository>();           
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
 
             return services;
         }

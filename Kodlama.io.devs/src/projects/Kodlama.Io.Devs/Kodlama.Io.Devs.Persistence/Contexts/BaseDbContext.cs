@@ -1,4 +1,5 @@
-﻿using Kodlama.Io.Devs.Domain.Entities;
+﻿using Core.Security.Entities;
+using Kodlama.Io.Devs.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -8,7 +9,7 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
     {
         protected IConfiguration Configuration { get; set; }
         public DbSet<Language> Languages { get; set; }
-
+        public DbSet<OperationClaim> OperationClaims { get; set; }
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
@@ -34,6 +35,16 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
 
             Language[] brandEntitySeeds = { new(1, "C"), new(2, "C++"), new(3, "C#") };
             modelBuilder.Entity<Language>().HasData(brandEntitySeeds);
+
+            modelBuilder.Entity<OperationClaim>(a =>
+            {
+                a.ToTable("OperationClaims").HasKey(k => k.Id);
+                a.Property(p => p.Id).HasColumnName("Id");
+                a.Property(p => p.Name).HasColumnName("Name");
+            });
+
+            OperationClaim[] operationClaimEntitySeeds = { new(1, "Admin"), new(2, "User") };
+            modelBuilder.Entity<OperationClaim>().HasData(operationClaimEntitySeeds);
         }
     }
 }
