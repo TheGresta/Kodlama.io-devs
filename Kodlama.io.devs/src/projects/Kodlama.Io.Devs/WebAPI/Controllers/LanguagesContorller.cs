@@ -1,4 +1,5 @@
 ﻿using Core.Application.Requests;
+using Core.Persistence.Dynamic;
 using Kodlama.Io.Devs.Application.Features.Languages.Commands.CreateLanguage;
 using Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage;
 using Kodlama.Io.Devs.Application.Features.Languages.Commands.UpdateLanguage;
@@ -6,6 +7,7 @@ using Kodlama.Io.Devs.Application.Features.Languages.Dtos;
 using Kodlama.Io.Devs.Application.Features.Languages.Models;
 using Kodlama.Io.Devs.Application.Features.Languages.Queries.GetByIdLanguage;
 using Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguage;
+using Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguageByDynamic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -14,6 +16,15 @@ namespace WebAPI.Controllers
     [ApiController]
     public class LanguagesContorller : BaseController
     {
+        [HttpPost("GetList/ByDynamic")]
+        public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
+        {
+            GetListLanguageByDynamicQuery getListLanguageByDynamicQuery = new GetListLanguageByDynamicQuery { PageRequest = pageRequest, Dynamic = dynamic };
+            LanguageListModel result = await Mediator.Send(getListLanguageByDynamicQuery);
+            return Ok(result);
+
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
