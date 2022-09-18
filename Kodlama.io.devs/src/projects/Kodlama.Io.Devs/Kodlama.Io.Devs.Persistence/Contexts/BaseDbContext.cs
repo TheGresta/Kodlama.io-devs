@@ -10,6 +10,8 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
         protected IConfiguration Configuration { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
