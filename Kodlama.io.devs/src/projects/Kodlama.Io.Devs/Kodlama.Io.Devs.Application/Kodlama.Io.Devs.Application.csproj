@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Kodlama.Io.Devs.Domain\Kodlama.Io.Devs.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Authorization\Profiles\" />
+  </ItemGroup>
+
 </Project>
