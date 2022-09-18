@@ -20,12 +20,21 @@ namespace Application
 
             services.AddScoped<LanguageBusinessRules>();
             services.AddScoped<LanguageBusinessRulesMessages>();
+
             services.AddScoped<OperationClaimBusinessRules>();
             services.AddScoped<OperationClaimBusinessRulesMessages>();
+
             services.AddScoped<UserOperationClaimBusinessRules>();
             services.AddScoped<UserOperationClaimBusinessRulesMessages>();
+
             services.AddScoped<AuthorizationBusinessRules>();
             services.AddScoped<AuthorizationBusinessRulesMessages>();
+
+            services.AddScoped<GitHubBusinessRules>();
+            services.AddScoped<GitHubBusinessRulesMessages>();
+
+            services.AddScoped<UserBusinessRules>();
+            services.AddScoped<UserBusinessRulesMessages>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));

@@ -15,10 +15,12 @@ namespace Kodlama.Io.Devs.Persistence
             services.AddDbContext<BaseDbContext>(options =>
                                                      options.UseNpgsql(
                                                          configuration.GetConnectionString("PostgreSql")));
+
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
             services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGitHubRepository, GitHubRepository>();
 
             return services;
         }

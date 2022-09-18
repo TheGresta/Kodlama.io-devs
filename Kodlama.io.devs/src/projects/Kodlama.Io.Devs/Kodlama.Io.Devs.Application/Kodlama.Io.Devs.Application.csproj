@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Features\Authorizations\Profiles\" />
+    <Folder Include="Features\GitHubs\Profiles\" />
     <Folder Include="Features\Users\Commands\" />
     <Folder Include="Features\Users\Rules\" />
     <Folder Include="Features\Users\Queries\" />
