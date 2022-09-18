@@ -7,12 +7,12 @@ using MediatR;
 
 namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub
 {
-    public partial class CreateGitHubCommand : IRequest<CreatedGitHubDto>
+    public partial class UpdatedGitHubCommand : IRequest<CreatedGitHubDto>
     {
         public string Name { get; set; }
         public int UserId { get; set; }
 
-        public class CreateGitHubCommandHandler : IRequestHandler<CreateGitHubCommand, CreatedGitHubDto>
+        public class CreateGitHubCommandHandler : IRequestHandler<UpdatedGitHubCommand, CreatedGitHubDto>
         {
             private readonly IGitHubRepository _gitHubRepository;
             private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub
                 _gitHubBusinessRules = gitHubBusinessRules;
             }
 
-            public async Task<CreatedGitHubDto> Handle(CreateGitHubCommand request, CancellationToken cancellationToken)
+            public async Task<CreatedGitHubDto> Handle(UpdatedGitHubCommand request, CancellationToken cancellationToken)
             {
                 await _gitHubBusinessRules.UserShouldBeExistWhenGitHubInsertedOrUpdated(request.UserId);
                 await _gitHubBusinessRules.GitHubUserNameCanNotBeDuplicatedWhenInsertedOrUpdated(request.Name);

@@ -2,7 +2,7 @@
 
 namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub
 {
-    public class CreateGitHubCommandValidator : AbstractValidator<CreateGitHubCommand>
+    public class CreateGitHubCommandValidator : AbstractValidator<UpdatedGitHubCommand>
     {
         public CreateGitHubCommandValidator()
         {
