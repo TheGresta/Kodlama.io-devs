@@ -115,5 +115,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
                 userListModel.Items.Add(commandUserDto);
             }
         }
+
+
     }
 }
