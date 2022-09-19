@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
     public class GitHubsController : BaseController
     {
         [HttpPost("getlist/bydynamic")]
-        public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
+        public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListGitHubByDynamicQuery getListGitHubByDynamicQuery = new () { PageRequest = pageRequest, Dynamic = dynamic };
             GitHubListModel result = await Mediator.Send(getListGitHubByDynamicQuery);

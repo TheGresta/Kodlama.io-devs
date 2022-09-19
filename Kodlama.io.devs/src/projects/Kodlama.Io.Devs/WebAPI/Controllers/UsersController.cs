@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
     public class UsersController : BaseController
     {
         [HttpPost("getlist/bydynamic")]
-        public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
+        public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListUserByDynamicQuery getListByDynamicQuery = new() { PageRequest = pageRequest, Dynamic = dynamic };
             UserListModel result = await Mediator.Send(getListByDynamicQuery);

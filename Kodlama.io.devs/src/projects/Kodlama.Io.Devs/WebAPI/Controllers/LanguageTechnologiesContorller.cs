@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
     public class LanguageTechnologiesContorller : BaseController
     {
         [HttpPost("getlist/bydynamic")]
-        public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
+        public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListLanguageTechnologyByDynamicQuery getListLanguageTechnologyByDynamicQuery = new() { PageRequest = pageRequest, Dynamic = dynamic };
             LanguageTechnologyListModel result = await Mediator.Send(getListLanguageTechnologyByDynamicQuery);

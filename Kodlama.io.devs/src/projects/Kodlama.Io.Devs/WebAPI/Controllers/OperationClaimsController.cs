@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
     public class OperationClaimsController : BaseController
     {
         [HttpPost("getlist/bydynamic")]
-        public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
+        public async Task<IActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListOperationClaimByDynamicQuery getListOperationClaimByDynamicQuery = 
                 new () { PageRequest = pageRequest, Dynamic = dynamic };
