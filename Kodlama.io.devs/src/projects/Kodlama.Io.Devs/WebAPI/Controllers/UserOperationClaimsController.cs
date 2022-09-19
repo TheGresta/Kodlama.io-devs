@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListUserOperationClaimByDynamicQuery getListUserOperationClaimByDynamicQuery =
-                new GetListUserOperationClaimByDynamicQuery { PageRequest = pageRequest, Dynamic = dynamic };
+                new () { PageRequest = pageRequest, Dynamic = dynamic };
             UserOperationClaimListModel result = await Mediator.Send(getListUserOperationClaimByDynamicQuery);
             return Ok(result);
 
