@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
+namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
 {
-    public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        public RegisterCommandValidator()
+        public CreateUserCommandValidator()
         {
             RuleFor(r => r.UserForRegisterDto.FirstName).NotEmpty();
             RuleFor(r => r.UserForRegisterDto.FirstName).NotNull();
@@ -24,10 +24,21 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
             RuleFor(r => r.UserForRegisterDto.Password).MinimumLength(5);
             RuleFor(r => r.UserForRegisterDto.Password).MaximumLength(25);
 
-            RuleFor(r => r.GitHubName).NotEmpty();
-            RuleFor(r => r.GitHubName).NotNull();
-            RuleFor(r => r.GitHubName).MinimumLength(5);
-            RuleFor(r => r.GitHubName).MaximumLength(20);
+            RuleFor(r => r.OperationClaimIdList).Must(list => list.Count > 0);
+            RuleFor(r => r.OperationClaimIdList).ForEach(i => i.GreaterThan(0));
+
+            RuleFor(r => r.GitHubName).Must(g => CheckGitHubName(g));
+        }
+
+        private bool CheckGitHubName(string gitHubName)
+        {
+            if (gitHubName == null || gitHubName == "")
+                return true;
+
+            if (gitHubName.Length >= 5 && gitHubName.Length <= 20)
+                return true;
+
+            return false;
         }
     }
 }

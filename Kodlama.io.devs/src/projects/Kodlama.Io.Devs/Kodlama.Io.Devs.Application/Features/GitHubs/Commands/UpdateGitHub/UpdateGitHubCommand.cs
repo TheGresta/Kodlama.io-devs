@@ -31,6 +31,7 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.UpdateGitHub
                 await _gitHubBusinessRules.GitHubShouldBeExistWhenRequested(request.Id);
                 await _gitHubBusinessRules.UserShouldBeExistWhenGitHubInsertedOrUpdated(request.UserId);
                 await _gitHubBusinessRules.GitHubUserNameCanNotBeDuplicatedWhenInsertedOrUpdated(request.Name);
+                await _gitHubBusinessRules.AnUserShouldHaveOnlyOneGitHubUserNameWhenGitHubUpdated(request.Id, request.UserId);
 
                 GitHub? gitHub = await _gitHubRepository.GetAsync(g => g.Id == request.Id);
 

@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <Folder Include="Features\Authorizations\Profiles\" />
-    <Folder Include="Features\Users\Commands\" />
-    <Folder Include="Features\Users\Rules\" />
+    <Folder Include="Features\Users\Commands\DeleteUser\" />
+    <Folder Include="Features\Users\Commands\UpdateUser\" />
     <Folder Include="Features\Users\Queries\" />
     <Folder Include="Features\Users\Profiles\" />
   </ItemGroup>

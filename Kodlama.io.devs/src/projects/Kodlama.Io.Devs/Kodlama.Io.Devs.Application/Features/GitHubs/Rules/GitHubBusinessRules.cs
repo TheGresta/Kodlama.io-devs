@@ -41,5 +41,17 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Rules
         {
             if (!gitHubs.Items.Any()) throw new BusinessException(_messages.GitHubDataDoesNotExist);
         }
+
+        public async Task AnUserShouldHaveOnlyOneGitHubUserName(int userId)
+        {
+            GitHub? gitHub = await _gitHubRepository.GetAsync(u => u.UserId == userId);
+            if (gitHub == null) throw new BusinessException(_messages.UserCanNotHaveMultipleGitHubAddress);
+        }
+
+        public async Task AnUserShouldHaveOnlyOneGitHubUserNameWhenGitHubUpdated(int id, int userId)
+        {
+            GitHub? gitHub = await _gitHubRepository.GetAsync(u => u.UserId == userId && u.Id != id);
+            if (gitHub != null) throw new BusinessException(_messages.UserCanNotHaveMultipleGitHubAddress);
+        }
     }
 }
