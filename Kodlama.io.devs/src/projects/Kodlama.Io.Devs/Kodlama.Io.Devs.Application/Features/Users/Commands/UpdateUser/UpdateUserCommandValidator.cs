@@ -1,11 +1,15 @@
 ﻿using FluentValidation;
 
-namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
+namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUser
 {
-    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {
-        public CreateUserCommandValidator()
+        public UpdateUserCommandValidator()
         {
+            RuleFor(r => r.UserId).NotEmpty();
+            RuleFor(r => r.UserId).NotEmpty();
+            RuleFor(r => r.UserId).GreaterThan(0);
+
             RuleFor(r => r.UserForRegisterDto.FirstName).NotEmpty();
             RuleFor(r => r.UserForRegisterDto.FirstName).NotNull();
             RuleFor(r => r.UserForRegisterDto.FirstName).MaximumLength(50);

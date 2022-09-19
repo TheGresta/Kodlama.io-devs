@@ -21,9 +21,15 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Rules
             _messages = messages;
         }
 
-        public async Task UserEmailCanNotBeDuplicatedWhenInsertedOrUpdated(string email)
+        public async Task UserEmailCanNotBeDuplicatedWhenInserted(string email)
         {
             User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == email.ToLower());
+            if (user != null) throw new BusinessException(_messages.UserEmailAlreadExist);
+        }
+
+        public async Task UserEmailCanNotBeDuplicatedWhenUpdated(int userId, string email)
+        {
+            User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == email.ToLower() && u.Id != userId);
             if (user != null) throw new BusinessException(_messages.UserEmailAlreadExist);
         }
 

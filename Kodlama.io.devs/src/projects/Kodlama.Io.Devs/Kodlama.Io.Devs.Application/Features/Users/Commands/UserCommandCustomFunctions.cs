@@ -7,6 +7,9 @@ using Core.Security.Hashing;
 using Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub;
 using Kodlama.Io.Devs.Application.Features.GitHubs.Commands.UpdateGitHub;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Models;
+using Kodlama.Io.Devs.Application.Features.Users.Dtos;
+using Kodlama.Io.Devs.Application.Features.Users.Models;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
@@ -33,11 +36,15 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
         {
             GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userId);
 
-            if (gitHub == null)
+            if (name == null | name == "")
+            {
+                await _gitHubRepository.DeleteAsync(gitHub);
+            }
+            else if (gitHub == null)
             {
                 CreateGitHubCommand createGitHubCommand = new() { Name = name, UserId = userId };
                 await _mediator.Send(createGitHubCommand, cancellationToken);
-            }
+            }            
             else if (gitHub.Name != name)
             {
                 UpdateGitHubCommand updateGitHubCommand = new() { Id = gitHub.Id, Name = name, UserId = userId };
@@ -88,6 +95,25 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             user.AuthenticatorType = AuthenticatorType.Email;
+        }
+
+        public void SetCommandUserDtoWhenRequested(int userId, out CommandUserDto commadUserDto)
+        {
+            commadUserDto = new();
+            GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userId);
+
+            commadUserDto.GitHubLink = $"github.com/{gitHub.Name}";
+        }
+
+        public void SetCommandUserDtoWhenGetListRequested(IPaginate<User> userList, ref UserListModel userListModel)
+        {
+            for (int i = 0; i < userList.Items.Count; i++)
+            {
+                CommandUserDto commandUserDto = new();
+                GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userList.Items[i].Id);
+                commandUserDto.GitHubLink = $"github.com/{gitHub.Name}";
+                userListModel.Items.Add(commandUserDto);
+            }
         }
     }
 }

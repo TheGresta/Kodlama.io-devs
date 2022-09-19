@@ -1,8 +1,6 @@
-﻿using Core.Security.Entities;
-
-namespace Kodlama.Io.Devs.Application.Features.Users.Dtos
+﻿namespace Kodlama.Io.Devs.Application.Features.Users.Dtos
 {
-    public class CreatedUserDto
+    public class CommandUserDto
     {
         public string Name { get; set; }
         public string Email { get; set; }

@@ -2,6 +2,7 @@
 using Core.Security.Dtos;
 using Core.Security.Entities;
 using Core.Security.JWT;
+using Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Login;
 using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
 using Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser;
 using Kodlama.Io.Devs.Application.Services.Repositories;
@@ -19,12 +20,14 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
             private readonly AuthorizationBusinessRules _authorizationBusinessRules;
             private readonly IMediator _mediator;
             private readonly IOperationClaimRepository _operationClaimRepository;
+            private readonly IMapper _mapper;
 
-            public RegisterCommandHandler(AuthorizationBusinessRules authorizationBusinessRules, IMediator mediator, IOperationClaimRepository operationClaimRepository)
+            public RegisterCommandHandler(AuthorizationBusinessRules authorizationBusinessRules, IMediator mediator, IOperationClaimRepository operationClaimRepository, IMapper mapper)
             {
                 _authorizationBusinessRules = authorizationBusinessRules;
                 _mediator = mediator;
                 _operationClaimRepository = operationClaimRepository;
+                _mapper = mapper;
             }
             public async Task<AccessToken> Handle(RegisterCommand request, CancellationToken cancellationToken)
             {
@@ -34,8 +37,14 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
                 CreateUserCommand createUserCommand = new() { UserForRegisterDto = request.UserForRegisterDto, 
                                                               GitHubName = request.GitHubName, 
                                                               OperationClaimIdList = operationClaimIdList };
+                
+                await _mediator.Send(createUserCommand, cancellationToken);
 
-                AccessToken accessToken = await _mediator.Send(createUserCommand, cancellationToken);
+                UserForLoginDto userForLoginDto = _mapper.Map<UserForLoginDto>(request.UserForRegisterDto);
+                LoginCommand loginCommand = new() { UserForLoginDto = userForLoginDto };
+
+                AccessToken accessToken = await _mediator.Send(loginCommand, cancellationToken);
+
                 return accessToken;
             }
         }
