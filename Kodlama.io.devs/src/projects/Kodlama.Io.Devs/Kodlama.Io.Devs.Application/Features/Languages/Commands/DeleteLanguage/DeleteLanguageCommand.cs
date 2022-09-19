@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Persistence.Paging;
 using Kodlama.Io.Devs.Application.Features.Languages.Dtos;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
@@ -16,12 +17,14 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage
             private readonly ILanguageRepository _languageRepository;
             private readonly IMapper _mapper;
             private readonly LanguageBusinessRules _languageBusinessRules;
+            private readonly ILanguageTechnologyRepository _languageTechnologyRepository;
 
-            public DeleteLanguageCommandHandler(ILanguageRepository languageRepository, IMapper mapper, LanguageBusinessRules languageBusinessRules)
+            public DeleteLanguageCommandHandler(ILanguageRepository languageRepository, IMapper mapper, LanguageBusinessRules languageBusinessRules, ILanguageTechnologyRepository languageTechnologyRepository)
             {
                 _languageRepository = languageRepository;
                 _mapper = mapper;
                 _languageBusinessRules = languageBusinessRules;
+                _languageTechnologyRepository = languageTechnologyRepository;
             }
 
             public async Task<DeletedLanguageDto> Handle(DeleteLanguageCommand request, CancellationToken cancellationToken)
@@ -32,7 +35,20 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage
                 Language deletedLanguage = await _languageRepository.DeleteAsync(language);
                 DeletedLanguageDto deletedLanguageDto = _mapper.Map<DeletedLanguageDto>(deletedLanguage);
 
+                if (deletedLanguage != null)
+                    await this.DeleteAllLanguageTechnologiesWithGivenTechnologyId(deletedLanguage.Id);
+
                 return deletedLanguageDto;
+            }
+
+            private async Task DeleteAllLanguageTechnologiesWithGivenTechnologyId(int id)
+            {
+                IPaginate<LanguageTechnology> languageTechnologies = await _languageTechnologyRepository.GetListAsync(l => l.LanguageId == id);
+
+                foreach(LanguageTechnology languageTechnology in languageTechnologies.Items)
+                {
+                    await _languageTechnologyRepository.DeleteAsync(languageTechnology);
+                }
             }
         }
     }
