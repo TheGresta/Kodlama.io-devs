@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class OperationClaimsController : BaseController
     {
-        [HttpPost("GetList/ByDynamic")]
+        [HttpPost("getlist/bydynamic")]
         public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListOperationClaimByDynamicQuery getListOperationClaimByDynamicQuery = 
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("getlist")]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListOperationClaimQuery getListOperationClaimQuery = new() { PageRequest = pageRequest };
@@ -34,28 +34,28 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("getbyid/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetByIdOperationClaimQuery getByIdOperationClaimQuery)
         {
             GetByIdOperationClaimDto result = await Mediator.Send(getByIdOperationClaimQuery);
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateOperationClaimCommand createOperationClaimCommand)
         {
             CreatedOperationClaimDto result = await Mediator.Send(createOperationClaimCommand);
             return Created("", result);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaimCommand)
         {
             UpdatedOperationClaimDto result = await Mediator.Send(updateOperationClaimCommand);
             return Ok(result);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteOperationClaimCommand deleteOperationClaimCommand)
         {
             DeletedOperationClaimDto result = await Mediator.Send(deleteOperationClaimCommand);

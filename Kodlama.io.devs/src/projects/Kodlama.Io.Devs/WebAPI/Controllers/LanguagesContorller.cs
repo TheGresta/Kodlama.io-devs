@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class LanguagesContorller : BaseController
     {
-        [HttpPost("GetList/ByDynamic")]
+        [HttpPost("getlist/bydynamic")]
         public async Task<ActionResult> GetListByDynamic([FromQuery] PageRequest pageRequest, [FromBody] Dynamic dynamic)
         {
             GetListLanguageByDynamicQuery getListLanguageByDynamicQuery = new GetListLanguageByDynamicQuery { PageRequest = pageRequest, Dynamic = dynamic };
@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet("getlist")]
         public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
         {
             GetListLanguageQuery getListLanguageQuery = new() { PageRequest =  pageRequest};
@@ -33,28 +33,28 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("getbyid/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetByIdLanguageQuery getByIdLanguageQuery)
         {
             GetByIdLanguageDto result = await Mediator.Send(getByIdLanguageQuery);
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateLanguageCommand createLanguageCommand)
         {
             CreatedLanguageDto result = await Mediator.Send(createLanguageCommand);
             return Created("", result);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateLanguageCommand updateLanguageCommand)
         {
             UpdatedLanguageDto result = await Mediator.Send(updateLanguageCommand);
             return Ok(result);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteLanguageCommand deleteLanguageCommand)
         {
             DeletedLanguageDto result = await Mediator.Send(deleteLanguageCommand);
