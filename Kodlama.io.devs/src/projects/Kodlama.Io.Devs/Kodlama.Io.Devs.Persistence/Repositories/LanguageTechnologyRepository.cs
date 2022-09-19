@@ -5,9 +5,9 @@ using Kodlama.Io.Devs.Persistence.Contexts;
 
 namespace Kodlama.Io.Devs.Persistence.Repositories
 {
-    public class GitHubRepository : EfRepositoryBase<GitHub, BaseDbContext>, IGitHubRepository
+    public class LanguageTechnologyRepository : EfRepositoryBase<LanguageTechnology, BaseDbContext>, ILanguageTechnologyRepository
     {
-        public GitHubRepository(BaseDbContext context) : base(context)
+        public LanguageTechnologyRepository(BaseDbContext context) : base(context)
         {
         }
     }

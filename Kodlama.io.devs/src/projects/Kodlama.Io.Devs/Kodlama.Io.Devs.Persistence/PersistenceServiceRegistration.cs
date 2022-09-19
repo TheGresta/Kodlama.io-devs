@@ -21,6 +21,7 @@ namespace Kodlama.Io.Devs.Persistence
             services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGitHubRepository, GitHubRepository>();
+            services.AddScoped<ILanguageTechnologyRepository, LanguageTechnologyRepository>();
 
             return services;
         }

@@ -5,6 +5,7 @@ namespace Kodlama.Io.Devs.Domain.Entities
     public class Language : Entity
     {
         public string Name { get; set; }
+        public ICollection<LanguageTechnology>  LanguageTechnologies { get; set; }
 
         public Language()
         {

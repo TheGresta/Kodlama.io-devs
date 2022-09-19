@@ -10,6 +10,7 @@ using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
 using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Features.Users.Commands;
+using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
 
 namespace Application
 {
@@ -40,6 +41,9 @@ namespace Application
             services.AddScoped<UserBusinessRulesMessages>();
 
             services.AddScoped<UserCommandCustomFunctions>();
+
+            services.AddScoped<LanguageTechnologyBusinessRules>();
+            services.AddScoped<LanguageTechnologyBusinessRulesMessages>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
