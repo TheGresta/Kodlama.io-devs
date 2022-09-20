@@ -16,29 +16,29 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Profiles
             CreateMap<GitHub, CreatedGitHubDto>()
                 .ForMember(g => g.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(g => g.UserMail, opt => opt.MapFrom(src => $"{src.User.Email}"))
-                .IncludeMembers(g => g.User).ReverseMap();
+                .ReverseMap();
 
             CreateMap<GitHub, DeletedGitHubDto>()
                 .ForMember(g => g.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(g => g.UserMail, opt => opt.MapFrom(src => $"{src.User.Email}"))
-                .IncludeMembers(g => g.User).ReverseMap();
+                .ReverseMap();
 
             CreateMap<GitHub, UpdateGitHubCommand>().ReverseMap();
             CreateMap<GitHub, UpdatedGitHubDto>()
                 .ForMember(g => g.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(g => g.UserMail, opt => opt.MapFrom(src => $"{src.User.Email}"))
-                .IncludeMembers(g => g.User).ReverseMap();
+                .ReverseMap();
 
             CreateMap<GitHub, GetByIdGitHubDto>()
                 .ForMember(g => g.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(g => g.UserMail, opt => opt.MapFrom(src => $"{src.User.Email}"))
-                .IncludeMembers(g => g.User).ReverseMap();
+                .ReverseMap();
 
             CreateMap<IPaginate<GitHub>, GitHubListModel>().ReverseMap();
             CreateMap<GitHub, ListGitHubDto>()
                 .ForMember(g => g.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(g => g.UserMail, opt => opt.MapFrom(src => $"{src.User.Email}"))
-                .IncludeMembers(g => g.User).ReverseMap();
+                .ReverseMap();
         }
     }
 }

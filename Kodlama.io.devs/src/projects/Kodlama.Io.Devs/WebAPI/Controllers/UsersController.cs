@@ -1,13 +1,5 @@
 ﻿using Core.Application.Requests;
 using Core.Persistence.Dynamic;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.UpdateUserOperationClaim;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Models;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetByIdUserOperationClaim;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetListUserOperationClaim;
-using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetListUserOperationClaimByDynamic;
 using Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser;
 using Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser;
 using Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUser;

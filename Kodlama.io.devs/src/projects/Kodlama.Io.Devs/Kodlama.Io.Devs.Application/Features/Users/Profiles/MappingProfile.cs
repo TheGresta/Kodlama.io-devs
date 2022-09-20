@@ -15,12 +15,16 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Profiles
                 .ForMember(u => u.Name, opt => opt.MapFrom(e => $"{e.FirstName} {e.LastName}"))
                 .ReverseMap();
 
-            CreateMap<ICollection<string>, ICollection<UserOperationClaim>>().ReverseMap();
-            CreateMap<UserOperationClaim, string>()
-                .ForMember(s => s, opt => opt.MapFrom(u => u.OperationClaim.Name))
-                .IncludeMembers(u => u.OperationClaim).ReverseMap();
+            CreateMap<ICollection<UserOperationClaim>, ICollection<string>>()
+                .AfterMap((src, dest) =>
+                {
+                    for (int i = 0; i < src.Count; i++)
+                    {
+                        dest.Add(src.ElementAt(i).OperationClaim.Name);
+                    }
+                }).ReverseMap();
 
-            CreateMap<IPaginate<User>, UserListModel>();
+            CreateMap<IPaginate<User>, UserListModel>();            
         }
     }
 }

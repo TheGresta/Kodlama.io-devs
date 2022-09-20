@@ -15,25 +15,25 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Profiles
             CreateMap<LanguageTechnology, CreateLanguageTechnologyCommand>().ReverseMap();
             CreateMap<LanguageTechnology, CreatedLanguageTechnologyDto>()
                 .ForMember(l => l.LanguageName, opt => opt.MapFrom(src => $"{src.Language.Name}"))
-                .IncludeMembers(l => l.Language).ReverseMap();
+                .ReverseMap();
 
             CreateMap<LanguageTechnology, DeletedLanguageTechnologyDto>()
                 .ForMember(l => l.LanguageName, opt => opt.MapFrom(src => $"{src.Language.Name}"))
-                .IncludeMembers(l => l.Language).ReverseMap();
+                .ReverseMap();
 
             CreateMap<LanguageTechnology, UpdateLanguageTechnologyCommand>().ReverseMap();
             CreateMap<LanguageTechnology, UpdatedLanguageTechnologyDto>()
                 .ForMember(l => l.LanguageName, opt => opt.MapFrom(src => $"{src.Language.Name}"))
-                .IncludeMembers(l => l.Language).ReverseMap();
+                .ReverseMap();
 
             CreateMap<LanguageTechnology, GetByIdLanguageTechnologyDto>()
                 .ForMember(l => l.LanguageName, opt => opt.MapFrom(src => $"{src.Language.Name}"))
-                .IncludeMembers(l => l.Language).ReverseMap();
+                .ReverseMap();
 
             CreateMap<IPaginate<LanguageTechnology>, LanguageTechnologyListModel>().ReverseMap();
             CreateMap<LanguageTechnology, ListLanguageTechnologyDto>()
                 .ForMember(l => l.LanguageName, opt => opt.MapFrom(src => $"{src.Language.Name}"))
-                .IncludeMembers(l => l.Language).ReverseMap();
+                .ReverseMap();
         }
     }
 }

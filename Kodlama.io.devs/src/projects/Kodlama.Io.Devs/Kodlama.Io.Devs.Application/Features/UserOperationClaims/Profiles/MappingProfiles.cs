@@ -12,33 +12,34 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Profiles
     {
         public MappingProfiles()
         {
+            AllowNullCollections = true;
             CreateMap<UserOperationClaim, CreateUserOperationClaimCommand>().ReverseMap();
             CreateMap<UserOperationClaim, CreatedUserOperationClaimDto>()
-                .ForMember(u => u.UserName, opt => opt.MapFrom(src => $"{ src.User.FirstName } {src.User.LastName}"))
-                .ForMember(u => u.OperationClaimName, opt => opt.MapFrom(src => $"{src.OperationClaim.Name}"))
-                .IncludeMembers(u => u.User, u => u.OperationClaim).ReverseMap();
+                .ForMember(u => u.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
+                .ForMember(u => u.OperationClaimName, opt => opt.MapFrom(src => $"{src.OperationClaim.Name}")) 
+                .ReverseMap();
 
             CreateMap<UserOperationClaim, DeletedUserOperationClaimDto>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(u => u.OperationClaimName, opt => opt.MapFrom(src => $"{src.OperationClaim.Name}"))
-                .IncludeMembers(u => u.User, u => u.OperationClaim).ReverseMap();
+                .ReverseMap();
 
             CreateMap<UserOperationClaim, UpdateUserOperationClaimCommand>().ReverseMap();
             CreateMap<UserOperationClaim, UpdatedUserOperationClaimDto>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(u => u.OperationClaimName, opt => opt.MapFrom(src => $"{src.OperationClaim.Name}"))
-                .IncludeMembers(u => u.User, u => u.OperationClaim).ReverseMap();
+                .ReverseMap();
 
             CreateMap<UserOperationClaim, GetByIdUserOperationClaimDto>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(u => u.OperationClaimName, opt => opt.MapFrom(src => $"{src.OperationClaim.Name}"))
-                .IncludeMembers(u => u.User, u => u.OperationClaim).ReverseMap();
+                .ReverseMap();
 
             CreateMap<IPaginate<UserOperationClaim>, UserOperationClaimListModel>().ReverseMap();
             CreateMap<UserOperationClaim, ListUserOperationClaimDto>()
                 .ForMember(u => u.UserName, opt => opt.MapFrom(src => $"{src.User.FirstName} {src.User.LastName}"))
                 .ForMember(u => u.OperationClaimName, opt => opt.MapFrom(src => $"{src.OperationClaim.Name}"))
-                .IncludeMembers(u => u.User, u => u.OperationClaim).ReverseMap();            
+                .ReverseMap();
         }
     }
 }
