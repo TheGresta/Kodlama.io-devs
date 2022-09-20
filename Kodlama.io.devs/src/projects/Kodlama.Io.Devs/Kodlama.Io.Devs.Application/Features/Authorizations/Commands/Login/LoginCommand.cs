@@ -33,9 +33,10 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Login
             {
                 await _authorizationBusinessRules.UserShouldBeExistWhenLogin(request.UserForLoginDto.Email);
 
-                IPaginate<User> userList = await _userRepository.GetListAsync(u => u.Email.ToLower() == request.UserForLoginDto.Email.ToLower(), 
-                                         include: x => x.Include(u => u.UserOperationClaims).ThenInclude(u => u.OperationClaim));
-                User? user = userList.Items.FirstOrDefault();
+                User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == request.UserForLoginDto.Email.ToLower(),
+                                                            include: x => x.Include(u => u.UserOperationClaims)
+                                                            .ThenInclude(u => u.OperationClaim),
+                                                            enableTracking: false);
 
                 _authorizationBusinessRules.VerifyPassword(request.UserForLoginDto, user);
 

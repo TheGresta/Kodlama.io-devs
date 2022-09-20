@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub
 {
@@ -32,7 +33,7 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub
                 await _gitHubBusinessRules.AnUserShouldHaveOnlyOneGitHubUserName(request.UserId);
 
                 GitHub gitHub = _mapper.Map<GitHub>(request);
-                GitHub createdGitHub = await _gitHubRepository.AddAsync(gitHub);
+                GitHub? createdGitHub = await _gitHubRepository.AddAsync(gitHub);
                 CreatedGitHubDto mappedGitHubDto = _mapper.Map<CreatedGitHubDto>(createdGitHub);
 
                 return mappedGitHubDto;

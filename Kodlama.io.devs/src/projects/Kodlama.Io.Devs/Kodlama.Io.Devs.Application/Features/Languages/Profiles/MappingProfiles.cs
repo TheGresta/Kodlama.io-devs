@@ -25,14 +25,8 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Profiles
             CreateMap<Language, ListLanguageDto>().ReverseMap();
             CreateMap<IPaginate<Language>, LanguageListModel>();
 
-            CreateMap<ICollection<LanguageTechnology>, ICollection<string>>()
-                .AfterMap((src, dest) =>
-                {
-                    for (int i = 0; i < src.Count; i++)
-                    {
-                        dest.Add(src.ElementAt(i).Language.Name);
-                    }
-                }).ReverseMap();
+            CreateMap<LanguageTechnology, string>()
+                .ConvertUsing(l => l.Name);
 
         }
     }

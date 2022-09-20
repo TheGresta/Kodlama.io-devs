@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using Core.Application.Requests;
-using Core.Persistence.Paging;
 using Kodlama.Io.Devs.Application.Features.Languages.Dtos;
-using Kodlama.Io.Devs.Application.Features.Languages.Models;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetByIdLanguage
 {
@@ -30,7 +28,10 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetByIdLanguage
             {
                 await _languageBusinessRules.LanguageShouldBeExistWhenRequested(request.Id);
 
-                Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id);
+                Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id,
+                                                                        include: x => x.Include(g => g.LanguageTechnologies),
+                                                                        enableTracking: false);
+
                 GetByIdLanguageDto getByIdLanguageDto = _mapper.Map<GetByIdLanguageDto>(language);
                 return getByIdLanguageDto;
             }
