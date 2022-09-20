@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.UpdateLanguage
 {
@@ -34,8 +35,13 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.UpdateLanguage
 
                 _mapper.Map(request, language);
 
-                Language updatedLanguage = await _languageRepository.UpdateAsync(language);
-                UpdatedLanguageDto updatedLanguageDto = _mapper.Map<UpdatedLanguageDto>(updatedLanguage);
+                await _languageRepository.UpdateAsync(language);
+
+                language = await _languageRepository.GetAsync(l => l.Id == language.Id,
+                                                               include: x => x.Include(g => g.LanguageTechnologies),
+                                                               enableTracking: false);
+
+                UpdatedLanguageDto updatedLanguageDto = _mapper.Map<UpdatedLanguageDto>(language);
 
                 return updatedLanguageDto;
             }

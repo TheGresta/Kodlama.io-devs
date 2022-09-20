@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.CreateLanguage
 {
@@ -29,7 +30,11 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.CreateLanguage
                 await _languageBusinessRules.LanguageNameCanNotBeDuplicatedWhenInsertedOrUpdated(request.Name);
 
                 Language mappedLanguage = _mapper.Map<Language>(request);
-                Language createdLanguage = await _languageRepository.AddAsync(mappedLanguage);
+                Language? createdLanguage = await _languageRepository.AddAsync(mappedLanguage);
+
+                createdLanguage = await _languageRepository.GetAsync(l => l.Id == createdLanguage.Id,
+                                                               include: x => x.Include(g => g.LanguageTechnologies),
+                                                               enableTracking: false);
                 CreatedLanguageDto createdLanguageDto = _mapper.Map<CreatedLanguageDto>(createdLanguage);
 
                 return createdLanguageDto;
