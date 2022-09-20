@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Queries.GetByIdLanguageTechnology
 {
@@ -29,7 +30,10 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Queries.GetB
             {
                 await _languageTechnologyBusinessRules.LanguageTechnologyShouldBeExistWhenRequested(request.Id);
 
-                LanguageTechnology? languageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == request.Id);
+                LanguageTechnology? languageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == request.Id,
+                                                                                        include: x => x.Include(l => l.Language),
+                                                                                        enableTracking: false);
+
                 GetByIdLanguageTechnologyDto mappedLanguageTechnology = _mapper.Map<GetByIdLanguageTechnologyDto>(languageTechnology);
 
                 return mappedLanguageTechnology;

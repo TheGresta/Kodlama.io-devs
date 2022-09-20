@@ -6,6 +6,7 @@ using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Queries.GetListLanguageTechnology
 {
@@ -31,7 +32,10 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Queries.GetL
             public async Task<LanguageTechnologyListModel> Handle(GetListLanguageTechnologyQuery request, CancellationToken cancellationToken)
             {
                 IPaginate<LanguageTechnology> languageTechnologies = 
-                    await _languageTechnologyRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+                    await _languageTechnologyRepository.GetListAsync(include: x => x.Include(l => l.Language), 
+                                                                     index: request.PageRequest.Page, 
+                                                                     size: request.PageRequest.PageSize,
+                                                                     enableTracking: false);
 
                 await _languageTechnologyBusinessRules.LanguageTechnologyDataShouldBeExistWhenRequested(languageTechnologies);
 

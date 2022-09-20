@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Commands.DeleteLanguageTechnology
 {
@@ -29,9 +30,12 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Commands.Del
             {
                 await _languageTechnologyBusinessRules.LanguageTechnologyShouldBeExistWhenRequested(request.Id);
 
-                LanguageTechnology? languageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == request.Id);
-                LanguageTechnology? deletedLanguageTechnology = await _languageTechnologyRepository.DeleteAsync(languageTechnology);
-                DeletedLanguageTechnologyDto mappedLanguageTechnology = _mapper.Map<DeletedLanguageTechnologyDto>(deletedLanguageTechnology);
+                LanguageTechnology? languageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == request.Id,
+                                                               include: x => x.Include(l => l.Language),
+                                                               enableTracking: false);
+
+                await _languageTechnologyRepository.DeleteAsync(languageTechnology);
+                DeletedLanguageTechnologyDto mappedLanguageTechnology = _mapper.Map<DeletedLanguageTechnologyDto>(languageTechnology);
 
                 return mappedLanguageTechnology;
             }
