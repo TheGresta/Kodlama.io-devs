@@ -35,7 +35,8 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Queries.GetL
                     await _languageTechnologyRepository.GetListAsync(include: x => x.Include(l => l.Language), 
                                                                      index: request.PageRequest.Page, 
                                                                      size: request.PageRequest.PageSize,
-                                                                     enableTracking: false);
+                                                                     enableTracking: false,
+                                                                     orderBy: g => g.OrderBy(g => g.Id));
 
                 await _languageTechnologyBusinessRules.LanguageTechnologyDataShouldBeExistWhenRequested(languageTechnologies);
 

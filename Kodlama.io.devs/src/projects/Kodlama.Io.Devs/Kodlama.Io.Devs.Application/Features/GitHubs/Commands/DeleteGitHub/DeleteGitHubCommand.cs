@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.DeleteGitHub
 {
@@ -28,7 +29,7 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.DeleteGitHub
                 await _gitHubBusinessRules.GitHubShouldBeExistWhenRequested(request.Id);
 
                 GitHub? gitHub = await _gitHubRepository.GetAsync(g => g.Id == request.Id);
-                GitHub? deletedGitHub = await _gitHubRepository.DeleteAsync(gitHub);
+                GitHub? deletedGitHub = await _gitHubRepository.DeleteAsync(gitHub, include: x => x.Include(g => g.User));
                 DeletedGitHubDto mappedGitHubDto = _mapper.Map<DeletedGitHubDto>(deletedGitHub);
 
                 return mappedGitHubDto;

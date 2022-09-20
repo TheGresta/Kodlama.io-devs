@@ -33,7 +33,8 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.CreateGitHub
                 await _gitHubBusinessRules.AnUserShouldHaveOnlyOneGitHubUserName(request.UserId);
 
                 GitHub gitHub = _mapper.Map<GitHub>(request);
-                GitHub? createdGitHub = await _gitHubRepository.AddAsync(gitHub);
+                GitHub? createdGitHub = await _gitHubRepository.AddAsync(gitHub, include: x => x.Include(g => g.User));
+
                 CreatedGitHubDto mappedGitHubDto = _mapper.Map<CreatedGitHubDto>(createdGitHub);
 
                 return mappedGitHubDto;

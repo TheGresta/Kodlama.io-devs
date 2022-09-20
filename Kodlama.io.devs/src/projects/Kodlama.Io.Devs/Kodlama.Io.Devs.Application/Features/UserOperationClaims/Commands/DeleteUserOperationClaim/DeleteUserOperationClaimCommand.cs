@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.DeleteUserOperationClaim
 {
@@ -29,7 +30,7 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.Dele
                 await _userOperationClaimBusinessRules.UserOperationClaimShouldBeExistWhenRequested(request.Id);
 
                 UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.Id == request.Id);
-                UserOperationClaim deletedUserOperationClaim = await _userOperationClaimRepository.DeleteAsync(userOperationClaim);
+                UserOperationClaim deletedUserOperationClaim = await _userOperationClaimRepository.DeleteAsync(userOperationClaim, include: x => x.Include(g => g.User).Include(g => g.OperationClaim));
                 DeletedUserOperationClaimDto deletedUserOperationClaimDto = _mapper.Map<DeletedUserOperationClaimDto>(deletedUserOperationClaim);
 
                 return deletedUserOperationClaimDto;

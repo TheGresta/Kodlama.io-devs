@@ -7,6 +7,7 @@ using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Models;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetListUserOperationClaim
 {
@@ -30,7 +31,10 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetLi
             public async Task<UserOperationClaimListModel> Handle(GetListUserOperationClaimQuery request, CancellationToken cancellationToken)
             {
                 IPaginate<UserOperationClaim>? userOperationClaims = 
-                    await _userOperationClaimRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+                    await _userOperationClaimRepository.GetListAsync(include: x => x.Include(g => g.User).Include(g => g.OperationClaim), 
+                                                                     index: request.PageRequest.Page, 
+                                                                     size: request.PageRequest.PageSize,
+                                                                     enableTracking: false);
 
                 await _userOperationClaimBusinessRules.ShouldBeSomeDataInTheUserOperationClaimTableWhenRequested(userOperationClaims);
 

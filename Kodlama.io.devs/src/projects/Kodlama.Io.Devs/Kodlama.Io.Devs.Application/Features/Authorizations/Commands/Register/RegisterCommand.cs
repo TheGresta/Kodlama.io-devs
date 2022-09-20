@@ -13,7 +13,6 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
     public partial class RegisterCommand : IRequest<AccessToken>
     {
         public UserForRegisterDto UserForRegisterDto { get; set; }
-        public string? GitHubName { get; set; }
 
         public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AccessToken>
         {
@@ -34,8 +33,7 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
                 await _authorizationBusinessRules.UserShouldNotExistsWhenRegister(request.UserForRegisterDto.Email);
 
                 IList<int> operationClaimIdList = new List<int>() { _operationClaimRepository.Get(o => o.Name == "User").Id };
-                CreateUserCommand createUserCommand = new() { UserForRegisterDto = request.UserForRegisterDto, 
-                                                              GitHubName = request.GitHubName, 
+                CreateUserCommand createUserCommand = new() { UserForRegisterDto = request.UserForRegisterDto,                                                                
                                                               OperationClaimIdList = operationClaimIdList };
                 
                 await _mediator.Send(createUserCommand, cancellationToken);

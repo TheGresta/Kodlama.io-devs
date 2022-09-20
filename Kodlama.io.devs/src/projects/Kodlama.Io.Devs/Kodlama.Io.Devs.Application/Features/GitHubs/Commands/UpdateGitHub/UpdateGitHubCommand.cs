@@ -4,6 +4,7 @@ using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.UpdateGitHub
 {
@@ -34,10 +35,8 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Commands.UpdateGitHub
                 await _gitHubBusinessRules.AnUserShouldHaveOnlyOneGitHubUserNameWhenGitHubUpdated(request.Id, request.UserId);
 
                 GitHub? gitHub = await _gitHubRepository.GetAsync(g => g.Id == request.Id);
-
                 _mapper.Map(request, gitHub);
-
-                GitHub? updatedGitHub = await _gitHubRepository.UpdateAsync(gitHub);
+                GitHub? updatedGitHub = await _gitHubRepository.UpdateAsync(gitHub, include: x => x.Include(g => g.User));
                 UpdatedGitHubDto mappedGitHubDto = _mapper.Map<UpdatedGitHubDto>(updatedGitHub);
 
                 return mappedGitHubDto;

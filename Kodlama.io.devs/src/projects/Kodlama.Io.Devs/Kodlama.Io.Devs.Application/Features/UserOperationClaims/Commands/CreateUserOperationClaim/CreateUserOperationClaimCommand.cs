@@ -3,7 +3,9 @@ using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
+using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.CreateUserOperationClaim
 {
@@ -33,7 +35,7 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.Crea
                 await _userOperationClaimBusinessRules.UserShouldBeExistWhenRequested(request.UserId);
 
                 UserOperationClaim mappedUserOperationClaim = _mapper.Map<UserOperationClaim>(request);
-                UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim);
+                UserOperationClaim createdUserOperationClaim = await _userOperationClaimRepository.AddAsync(mappedUserOperationClaim, include: x => x.Include(g => g.User).Include(g => g.OperationClaim));
                 CreatedUserOperationClaimDto createdUserOperationClaimDto = _mapper.Map<CreatedUserOperationClaimDto>(createdUserOperationClaim);
 
                 return createdUserOperationClaimDto;

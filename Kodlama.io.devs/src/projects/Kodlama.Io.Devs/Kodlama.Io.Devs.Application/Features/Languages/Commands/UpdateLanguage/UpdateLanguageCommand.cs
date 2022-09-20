@@ -32,16 +32,9 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.UpdateLanguage
                 await _languageBusinessRules.LanguageShouldBeExistWhenRequested(request.Id);
 
                 Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id);
-
                 _mapper.Map(request, language);
-
-                await _languageRepository.UpdateAsync(language);
-
-                language = await _languageRepository.GetAsync(l => l.Id == language.Id,
-                                                               include: x => x.Include(g => g.LanguageTechnologies),
-                                                               enableTracking: false);
-
-                UpdatedLanguageDto updatedLanguageDto = _mapper.Map<UpdatedLanguageDto>(language);
+                Language? updatedLanguage = await _languageRepository.UpdateAsync(language, include: x => x.Include(g => g.LanguageTechnologies));
+                UpdatedLanguageDto updatedLanguageDto = _mapper.Map<UpdatedLanguageDto>(updatedLanguage);
 
                 return updatedLanguageDto;
             }

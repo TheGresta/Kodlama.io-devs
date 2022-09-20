@@ -4,7 +4,7 @@ using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetByIdUserOperationClaim
 {
@@ -29,7 +29,10 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetBy
             {
                 await _userOperationClaimBusinessRules.UserOperationClaimShouldBeExistWhenRequested(request.Id);
 
-                UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(u => u.Id == request.Id);
+                UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(l => l.Id == request.Id,
+                                                                                                      include: x => x.Include(g => g.User).Include(g => g.OperationClaim),
+                                                                                                      enableTracking: false);
+
                 GetByIdUserOperationClaimDto getByIdUserOperationClaimDto = _mapper.Map<GetByIdUserOperationClaimDto>(userOperationClaim);
 
                 return getByIdUserOperationClaimDto;

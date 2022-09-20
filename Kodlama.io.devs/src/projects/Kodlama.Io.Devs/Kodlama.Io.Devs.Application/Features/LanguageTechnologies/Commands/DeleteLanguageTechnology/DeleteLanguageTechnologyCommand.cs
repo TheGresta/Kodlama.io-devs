@@ -30,12 +30,9 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Commands.Del
             {
                 await _languageTechnologyBusinessRules.LanguageTechnologyShouldBeExistWhenRequested(request.Id);
 
-                LanguageTechnology? languageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == request.Id,
-                                                               include: x => x.Include(l => l.Language),
-                                                               enableTracking: false);
-
-                await _languageTechnologyRepository.DeleteAsync(languageTechnology);
-                DeletedLanguageTechnologyDto mappedLanguageTechnology = _mapper.Map<DeletedLanguageTechnologyDto>(languageTechnology);
+                LanguageTechnology? languageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == request.Id);
+                LanguageTechnology? deletedLanguageTechnology = await _languageTechnologyRepository.DeleteAsync(languageTechnology, include: x => x.Include(l => l.Language));
+                DeletedLanguageTechnologyDto mappedLanguageTechnology = _mapper.Map<DeletedLanguageTechnologyDto>(deletedLanguageTechnology);
 
                 return mappedLanguageTechnology;
             }

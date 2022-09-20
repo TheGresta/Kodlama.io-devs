@@ -30,12 +30,8 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.CreateLanguage
                 await _languageBusinessRules.LanguageNameCanNotBeDuplicatedWhenInsertedOrUpdated(request.Name);
 
                 Language mappedLanguage = _mapper.Map<Language>(request);
-                Language? createdLanguage = await _languageRepository.AddAsync(mappedLanguage);
-
-                createdLanguage = await _languageRepository.GetAsync(l => l.Id == createdLanguage.Id,
-                                                               include: x => x.Include(g => g.LanguageTechnologies),
-                                                               enableTracking: false);
-                CreatedLanguageDto createdLanguageDto = _mapper.Map<CreatedLanguageDto>(createdLanguage);
+                Language? addedLanguage = await _languageRepository.AddAsync(mappedLanguage, include: x => x.Include(g => g.LanguageTechnologies));
+                CreatedLanguageDto createdLanguageDto = _mapper.Map<CreatedLanguageDto>(addedLanguage);
 
                 return createdLanguageDto;
             }

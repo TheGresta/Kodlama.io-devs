@@ -23,11 +23,6 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Commands.Register
             RuleFor(r => r.UserForRegisterDto.Password).NotNull();
             RuleFor(r => r.UserForRegisterDto.Password).MinimumLength(5);
             RuleFor(r => r.UserForRegisterDto.Password).MaximumLength(25);
-
-            RuleFor(r => r.GitHubName).NotEmpty();
-            RuleFor(r => r.GitHubName).NotNull();
-            RuleFor(r => r.GitHubName).MinimumLength(5);
-            RuleFor(r => r.GitHubName).MaximumLength(20);
         }
     }
 }

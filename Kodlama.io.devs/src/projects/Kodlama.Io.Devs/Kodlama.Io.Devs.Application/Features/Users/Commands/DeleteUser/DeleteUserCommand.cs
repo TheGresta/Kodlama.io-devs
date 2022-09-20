@@ -4,12 +4,13 @@ using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
 {
     public partial class DeleteUserCommand : IRequest<CommandUserDto>
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, CommandUserDto>
         {
             private readonly IUserRepository _userRepository;
@@ -27,10 +28,10 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
 
             public async Task<CommandUserDto> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
             {
-                await _userBusinessRules.UserShouldBeExistWhenRequested(request.UserId);
+                await _userBusinessRules.UserShouldBeExistWhenRequested(request.Id);
 
-                User? user = await _userRepository.GetAsync(u => u.Id == request.UserId);
-                User deletedUser = await _userRepository.DeleteAsync(user);
+                User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
+                User deletedUser = await _userRepository.DeleteAsync(user, include: x => x.Include(u => u.UserOperationClaims));
                 CommandUserDto mappedUserDto = new();
 
                 await _userCommandCustomFunctions.DeleteGitHubAddressWhenUserDeleted(deletedUser.Id);

@@ -6,9 +6,9 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
     {
         public DeleteUserCommandValidator()
         {
-            RuleFor(u => u.UserId).NotEmpty();
-            RuleFor(u => u.UserId).NotNull();
-            RuleFor(u => u.UserId).GreaterThan(0);
+            RuleFor(u => u.Id).NotEmpty();
+            RuleFor(u => u.Id).NotNull();
+            RuleFor(u => u.Id).GreaterThan(0);
         }
     }
 }

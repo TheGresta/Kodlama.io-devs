@@ -35,12 +35,7 @@ namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Commands.Cre
             await _languageTechnologyBusinessRules.LanguageTechnologyNameCanNotBeDuplicatedWhenInserted(request.Name);
 
             LanguageTechnology languageTechnology = _mapper.Map<LanguageTechnology>(request);
-            LanguageTechnology? addedLanguageTechnology = await _languageTechnologyRepository.AddAsync(languageTechnology);
-
-            addedLanguageTechnology = await _languageTechnologyRepository.GetAsync(l => l.Id == addedLanguageTechnology.Id,
-                                                               include: x => x.Include(l => l.Language),
-                                                               enableTracking: false);
-
+            LanguageTechnology? addedLanguageTechnology = await _languageTechnologyRepository.AddAsync(languageTechnology, include: x => x.Include(l => l.Language));
             CreatedLanguageTechnologyDto mappedLanguageTechnology = _mapper.Map<CreatedLanguageTechnologyDto>(addedLanguageTechnology);
 
             return mappedLanguageTechnology;

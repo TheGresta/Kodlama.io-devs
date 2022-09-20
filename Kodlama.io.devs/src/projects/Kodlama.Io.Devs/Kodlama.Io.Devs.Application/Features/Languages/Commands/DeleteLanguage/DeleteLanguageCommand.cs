@@ -32,19 +32,18 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage
             {
                 await _languageBusinessRules.LanguageShouldBeExistWhenRequested(request.Id);
 
-                Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id,
-                                                               include: x => x.Include(g => g.LanguageTechnologies),
-                                                               enableTracking: false);
-                await _languageRepository.DeleteAsync(language);
-                DeletedLanguageDto deletedLanguageDto = _mapper.Map<DeletedLanguageDto>(language);
+                Language? language = await _languageRepository.GetAsync(l => l.Id == request.Id);
+                Language? deletedLanguage = await _languageRepository.DeleteAsync(language, include: x => x.Include(g => g.LanguageTechnologies));
 
-                if (language != null)
-                    await this.DeleteAllLanguageTechnologiesWithGivenTechnologyId(language.Id);
+                if (deletedLanguage != null)
+                    await this.DeleteAllLanguageTechnologiesWithGivenLanguageId(deletedLanguage.Id);
+
+                DeletedLanguageDto deletedLanguageDto = _mapper.Map<DeletedLanguageDto>(deletedLanguage);                
 
                 return deletedLanguageDto;
             }
 
-            private async Task DeleteAllLanguageTechnologiesWithGivenTechnologyId(int id)
+            private async Task DeleteAllLanguageTechnologiesWithGivenLanguageId(int id)
             {
                 IPaginate<LanguageTechnology> languageTechnologies = await _languageTechnologyRepository.GetListAsync(l => l.LanguageId == id);
 

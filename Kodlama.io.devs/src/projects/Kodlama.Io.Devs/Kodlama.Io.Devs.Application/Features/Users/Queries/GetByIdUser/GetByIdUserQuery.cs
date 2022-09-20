@@ -10,7 +10,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetByIdUser
 {
     public partial class GetByIdUserQuery : IRequest<CommandUserDto>
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         public class GetByIdUserQueryHandler : IRequestHandler<GetByIdUserQuery, CommandUserDto>
         {
@@ -30,12 +30,12 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetByIdUser
             }
             public async Task<CommandUserDto> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)
             {
-                await _userBusinessRules.UserShouldBeExistWhenRequested(request.UserId);
+                await _userBusinessRules.UserShouldBeExistWhenRequested(request.Id);
 
-                User? user = await _userRepository.GetAsync(u => u.Id == request.UserId);
+                User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
                 CommandUserDto mappedUserDto = new();
 
-                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(request.UserId, out mappedUserDto);
+                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(request.Id, out mappedUserDto);
 
                 mappedUserDto = _mapper.Map<CommandUserDto>(user);
 

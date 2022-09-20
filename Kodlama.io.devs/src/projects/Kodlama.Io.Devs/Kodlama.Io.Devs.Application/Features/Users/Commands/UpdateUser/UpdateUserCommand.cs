@@ -7,6 +7,7 @@ using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUser
 {
@@ -45,7 +46,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUser
                 CommandUserDto mappedUserDto = new();
                 _userCommandCustomFunctions.SetUserPasswordWhenUserCreatedOrUpdated(request.UserForRegisterDto, out user);
 
-                User updatedUser = await _userRepository.UpdateAsync(user);
+                User updatedUser = await _userRepository.UpdateAsync(user, include: x => x.Include(u => u.UserOperationClaims));
 
                 await _userCommandCustomFunctions.CreateOrUpdateGitHubAsync(updatedUser.Id, request.GitHubName, cancellationToken);
                 await _userCommandCustomFunctions.CreateOrUpdateOperationClaimsAsync(request.OperationClaimIdList, updatedUser.Id, cancellationToken);

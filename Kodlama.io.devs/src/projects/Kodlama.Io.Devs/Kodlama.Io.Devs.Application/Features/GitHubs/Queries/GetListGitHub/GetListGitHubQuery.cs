@@ -6,6 +6,7 @@ using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.GitHubs.Queries.GetListGitHub
 {
@@ -28,7 +29,10 @@ namespace Kodlama.Io.Devs.Application.Features.GitHubs.Queries.GetListGitHub
             public async Task<GitHubListModel> Handle(GetListGitHubQuery request, CancellationToken cancellationToken)
             {
                 IPaginate<GitHub> gitHubs = 
-                    await _gitHubRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+                    await _gitHubRepository.GetListAsync(include: x => x.Include(g => g.User), 
+                                                         index: request.PageRequest.Page, 
+                                                         size: request.PageRequest.PageSize,
+                                                         enableTracking: false);
 
                 await _gitHubBusinessRules.ShouldBeSomeDataInTheGitHubTableWhenRequested(gitHubs);
 

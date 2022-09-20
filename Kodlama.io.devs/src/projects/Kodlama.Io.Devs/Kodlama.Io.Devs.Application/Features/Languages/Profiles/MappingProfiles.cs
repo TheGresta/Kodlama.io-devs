@@ -27,7 +27,6 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Profiles
 
             CreateMap<LanguageTechnology, string>()
                 .ConvertUsing(l => l.Name);
-
         }
     }
 }

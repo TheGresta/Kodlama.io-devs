@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Dtos;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
 {
@@ -39,7 +41,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
                 CommandUserDto mappedUserDto = new();
                 _userCommandCustomFunctions.SetUserPasswordWhenUserCreatedOrUpdated(request.UserForRegisterDto, out user);
 
-                User addedUser = await _userRepository.AddAsync(user);
+                User addedUser = await _userRepository.AddAsync(user, include: x => x.Include(u => u.UserOperationClaims));
 
                 await _userCommandCustomFunctions.CreateOrUpdateGitHubAsync(addedUser.Id, request.GitHubName, cancellationToken);
                 await _userCommandCustomFunctions.CreateOrUpdateOperationClaimsAsync(request.OperationClaimIdList, addedUser.Id, cancellationToken);
