@@ -7,6 +7,7 @@ using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguageByDynamic
 {
@@ -30,8 +31,11 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguage
 
             public async Task<LanguageListModel> Handle(GetListLanguageByDynamicQuery request, CancellationToken cancellationToken)
             {
-                IPaginate<Language> languages = await _languageRepository.GetListByDynamicAsync(
-                    request.Dynamic, index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+                IPaginate<Language> languages = await _languageRepository.GetListByDynamicAsync(request.Dynamic,
+                                                                                                include: x => x.Include(g => g.LanguageTechnologies),
+                                                                                                index: request.PageRequest.Page, 
+                                                                                                size: request.PageRequest.PageSize,
+                                                                                                enableTracking: false);
 
                 await _languageBusinessRules.ShouldBeSomeDataInTheLanguageTableWhenRequested(languages);
 

@@ -6,6 +6,7 @@ using Kodlama.Io.Devs.Application.Features.Languages.Models;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguage
 {
@@ -27,7 +28,10 @@ namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguage
 
             public async Task<LanguageListModel> Handle(GetListLanguageQuery request, CancellationToken cancellationToken)
             {
-                IPaginate<Language> languages = await _languageRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+                IPaginate<Language> languages = await _languageRepository.GetListAsync(include: x => x.Include(g => g.LanguageTechnologies), 
+                                                                                       index: request.PageRequest.Page, 
+                                                                                       size: request.PageRequest.PageSize,
+                                                                                       enableTracking: false);
 
                 await _languageBusinessRules.ShouldBeSomeDataInTheLanguageTableWhenRequested(languages);
 
