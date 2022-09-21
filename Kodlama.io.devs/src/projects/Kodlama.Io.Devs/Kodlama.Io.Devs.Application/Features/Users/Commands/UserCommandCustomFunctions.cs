@@ -39,7 +39,8 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
 
             if (name == null | name == "")
             {
-                await _gitHubRepository.DeleteAsync(gitHub);
+                if(gitHub != null)
+                    await _gitHubRepository.DeleteAsync(gitHub);
             }
             else if (gitHub == null)
             {
@@ -113,7 +114,9 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
         public void SetCommandUserDtoWhenRequested(int userId, ref CommandUserDto commadUserDto)
         {
             GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userId);
-            commadUserDto.GitHubLink = $"github.com/{gitHub.Name}";
+
+            if(gitHub != null)
+                commadUserDto.GitHubLink = $"github.com/{gitHub.Name}";
 
             IPaginate<UserOperationClaim> userOperationClaims = 
                         _userOperationClaimRepository.GetList(u => u.UserId == userId, include: x => x.Include(g => g.OperationClaim));
@@ -131,8 +134,12 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
             for (int i = 0; i < userList.Items.Count; i++)
             {
                 GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userList.Items[i].Id);
-                string GitHubLink = $"github.com/{gitHub.Name}";
-                userListModel.Items.ElementAt(i).GitHubLink = GitHubLink;
+
+                if(gitHub != null)
+                {
+                    string GitHubLink = $"github.com/{gitHub.Name}";
+                    userListModel.Items.ElementAt(i).GitHubLink = GitHubLink;
+                }                
 
                 IPaginate<UserOperationClaim> userOperationClaims = _userOperationClaimRepository
                     .GetList(u => u.UserId == userList.Items[i].Id, include: x => x.Include(g => g.OperationClaim));
