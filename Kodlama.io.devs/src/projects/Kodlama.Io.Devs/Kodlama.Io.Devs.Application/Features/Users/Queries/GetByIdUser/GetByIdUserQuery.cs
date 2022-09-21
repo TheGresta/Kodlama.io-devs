@@ -5,6 +5,7 @@ using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetByIdUser
 {
@@ -35,9 +36,9 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetByIdUser
                 User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
                 CommandUserDto mappedUserDto = new();
 
-                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(request.Id, out mappedUserDto);
-
                 mappedUserDto = _mapper.Map<CommandUserDto>(user);
+
+                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(request.Id, ref mappedUserDto);                
 
                 return mappedUserDto;
             }

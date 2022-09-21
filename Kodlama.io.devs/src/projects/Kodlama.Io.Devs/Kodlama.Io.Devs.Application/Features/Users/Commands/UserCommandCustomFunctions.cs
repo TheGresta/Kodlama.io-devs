@@ -13,6 +13,7 @@ using Kodlama.Io.Devs.Application.Features.Users.Models;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands
 {
@@ -85,7 +86,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
             }
         }
 
-        public void SetUserPasswordWhenUserCreatedOrUpdated(UserForRegisterDto userForRegisterDto, out User user)
+        public void SetUserPasswordWhenUserCreated(UserForRegisterDto userForRegisterDto, out User user)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out passwordHash, out passwordSalt);
@@ -97,22 +98,49 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands
             user.AuthenticatorType = AuthenticatorType.Email;
         }
 
-        public void SetCommandUserDtoWhenRequested(int userId, out CommandUserDto commadUserDto)
+        public void SetUserPasswordWhenUserUpdated(UserForRegisterDto userForRegisterDto, ref User user)
         {
-            commadUserDto = new();
-            GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userId);
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out passwordHash, out passwordSalt);
 
+            _mapper.Map(userForRegisterDto, user);
+            user.Status = true;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            user.AuthenticatorType = AuthenticatorType.Email;
+        }
+
+        public void SetCommandUserDtoWhenRequested(int userId, ref CommandUserDto commadUserDto)
+        {
+            GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userId);
             commadUserDto.GitHubLink = $"github.com/{gitHub.Name}";
+
+            IPaginate<UserOperationClaim> userOperationClaims = 
+                        _userOperationClaimRepository.GetList(u => u.UserId == userId, include: x => x.Include(g => g.OperationClaim));
+
+            commadUserDto.UserOperationClaims.Clear();
+
+            foreach (UserOperationClaim uop in userOperationClaims.Items)
+            {
+                commadUserDto.UserOperationClaims.Add(uop.OperationClaim.Name);
+            }
         }
 
         public void SetCommandUserDtoWhenGetListRequested(IPaginate<User> userList, ref UserListModel userListModel)
         {
             for (int i = 0; i < userList.Items.Count; i++)
             {
-                CommandUserDto commandUserDto = new();
                 GitHub? gitHub = _gitHubRepository.Get(g => g.UserId == userList.Items[i].Id);
-                commandUserDto.GitHubLink = $"github.com/{gitHub.Name}";
-                userListModel.Items.Add(commandUserDto);
+                string GitHubLink = $"github.com/{gitHub.Name}";
+                userListModel.Items.ElementAt(i).GitHubLink = GitHubLink;
+
+                IPaginate<UserOperationClaim> userOperationClaims = _userOperationClaimRepository
+                    .GetList(u => u.UserId == userList.Items[i].Id, include: x => x.Include(g => g.OperationClaim));
+
+                foreach (UserOperationClaim uop in userOperationClaims.Items)
+                {
+                    userListModel.Items.ElementAt(i).UserOperationClaims.Add(uop.OperationClaim.Name);
+                }
             }
         }
 

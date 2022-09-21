@@ -31,12 +31,11 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
                 await _userBusinessRules.UserShouldBeExistWhenRequested(request.Id);
 
                 User? user = await _userRepository.GetAsync(u => u.Id == request.Id);
-                User deletedUser = await _userRepository.DeleteAsync(user, include: x => x.Include(u => u.UserOperationClaims));
+                User deletedUser = await _userRepository.DeleteAsync(user);
                 CommandUserDto mappedUserDto = new();
 
                 await _userCommandCustomFunctions.DeleteGitHubAddressWhenUserDeleted(deletedUser.Id);
                 await _userCommandCustomFunctions.DeleteAllUserOperationClaimsWhenUserDeleted(deletedUser.Id);
-                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(deletedUser.Id, out mappedUserDto);
 
                 mappedUserDto = _mapper.Map<CommandUserDto>(deletedUser);
                 return mappedUserDto;

@@ -6,9 +6,9 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUser
     {
         public UpdateUserCommandValidator()
         {
-            RuleFor(r => r.UserId).NotEmpty();
-            RuleFor(r => r.UserId).NotEmpty();
-            RuleFor(r => r.UserId).GreaterThan(0);
+            RuleFor(r => r.Id).NotEmpty();
+            RuleFor(r => r.Id).NotEmpty();
+            RuleFor(r => r.Id).GreaterThan(0);
 
             RuleFor(r => r.UserForRegisterDto.FirstName).NotEmpty();
             RuleFor(r => r.UserForRegisterDto.FirstName).NotNull();

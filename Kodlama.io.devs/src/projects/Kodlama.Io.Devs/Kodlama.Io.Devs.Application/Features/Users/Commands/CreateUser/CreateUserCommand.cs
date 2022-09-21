@@ -39,15 +39,15 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
 
                 User user = new();
                 CommandUserDto mappedUserDto = new();
-                _userCommandCustomFunctions.SetUserPasswordWhenUserCreatedOrUpdated(request.UserForRegisterDto, out user);
+                _userCommandCustomFunctions.SetUserPasswordWhenUserCreated(request.UserForRegisterDto, out user);
 
-                User addedUser = await _userRepository.AddAsync(user, include: x => x.Include(u => u.UserOperationClaims));
+                User addedUser = await _userRepository.AddAsync(user);
 
                 await _userCommandCustomFunctions.CreateOrUpdateGitHubAsync(addedUser.Id, request.GitHubName, cancellationToken);
-                await _userCommandCustomFunctions.CreateOrUpdateOperationClaimsAsync(request.OperationClaimIdList, addedUser.Id, cancellationToken);
-                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(addedUser.Id, out mappedUserDto);
+                await _userCommandCustomFunctions.CreateOrUpdateOperationClaimsAsync(request.OperationClaimIdList, addedUser.Id, cancellationToken);                
 
                 mappedUserDto = _mapper.Map<CommandUserDto>(addedUser);
+                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(addedUser.Id, ref mappedUserDto);
 
                 return mappedUserDto;
             }

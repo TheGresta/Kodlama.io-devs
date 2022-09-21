@@ -7,6 +7,7 @@ using Kodlama.Io.Devs.Application.Features.Users.Models;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUser
 {
@@ -33,15 +34,15 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUser
 
             public async Task<UserListModel> Handle(GetListUserQuery request, CancellationToken cancellationToken)
             {
-                IPaginate<User>? users = await _userRepository.GetListAsync(index: request.PageRequest.Page, size: request.PageRequest.PageSize);
+                IPaginate<User>? users = await _userRepository.GetListAsync(index: request.PageRequest.Page, 
+                                                                            size: request.PageRequest.PageSize);
 
                 await _userBusinessRules.ShouldBeSomeDataInTheUserTableWhenRequested(users);
 
-                UserListModel mappedUserListModel = new();
+                UserListModel mappedUserListModel = _mapper.Map<UserListModel>(users);
 
                 _userCommandCustomFunctions.SetCommandUserDtoWhenGetListRequested(users, ref mappedUserListModel);
 
-                mappedUserListModel = _mapper.Map<UserListModel>(users);
                 return mappedUserListModel;
             }
         }
