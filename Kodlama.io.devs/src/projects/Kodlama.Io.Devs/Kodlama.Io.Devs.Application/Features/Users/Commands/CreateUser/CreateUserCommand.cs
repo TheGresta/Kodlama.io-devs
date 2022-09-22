@@ -21,16 +21,16 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
             private readonly IUserRepository _userRepository;
             private readonly IMapper _mapper;            
             private readonly UserBusinessRules _userBusinessRules;
-            private readonly UserCommandCustomFunctions _userCommandCustomFunctions;
+            private readonly UserCustomFunctions _userCustomFunctions;
 
             public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper,
                                             UserBusinessRules userBusinessRules, 
-                                            UserCommandCustomFunctions userCommandCustomFunctions)
+                                            UserCustomFunctions userCommandCustomFunctions)
             {
                 _userRepository = userRepository;
                 _mapper = mapper;
                 _userBusinessRules = userBusinessRules;
-                _userCommandCustomFunctions = userCommandCustomFunctions;
+                _userCustomFunctions = userCommandCustomFunctions;
             }
 
             public async Task<CommandUserDto> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -39,15 +39,15 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
 
                 User user = new();
                 CommandUserDto mappedUserDto = new();
-                _userCommandCustomFunctions.SetUserPasswordWhenUserCreated(request.UserForRegisterDto, out user);
+                _userCustomFunctions.SetUserPasswordWhenUserCreated(request.UserForRegisterDto, out user);
 
                 User addedUser = await _userRepository.AddAsync(user);
 
-                await _userCommandCustomFunctions.CreateOrUpdateGitHubAsync(addedUser.Id, request.GitHubName, cancellationToken);
-                await _userCommandCustomFunctions.CreateOrUpdateOperationClaimsAsync(request.OperationClaimIdList, addedUser.Id, cancellationToken);                
+                await _userCustomFunctions.CreateOrUpdateGitHubAsync(addedUser.Id, request.GitHubName, cancellationToken);
+                await _userCustomFunctions.CreateOrUpdateOperationClaimsAsync(request.OperationClaimIdList, addedUser.Id, cancellationToken);                
 
                 mappedUserDto = _mapper.Map<CommandUserDto>(addedUser);
-                _userCommandCustomFunctions.SetCommandUserDtoWhenRequested(addedUser.Id, ref mappedUserDto);
+                _userCustomFunctions.SetCommandUserDtoWhenRequested(addedUser.Id, ref mappedUserDto);
 
                 return mappedUserDto;
             }

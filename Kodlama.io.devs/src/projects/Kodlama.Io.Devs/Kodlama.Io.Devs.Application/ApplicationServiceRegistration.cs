@@ -9,8 +9,8 @@ using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
 using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
-using Kodlama.Io.Devs.Application.Features.Users.Commands;
 using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
+using Core.Application.Pipelines.Authorization;
 
 namespace Application
 {
@@ -40,13 +40,13 @@ namespace Application
             services.AddScoped<UserBusinessRules>();
             services.AddScoped<UserBusinessRulesMessages>();
 
-            services.AddScoped<UserCommandCustomFunctions>();
+            services.AddScoped<UserCustomFunctions>();
 
             services.AddScoped<LanguageTechnologyBusinessRules>();
             services.AddScoped<LanguageTechnologyBusinessRulesMessages>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CacheRemovingBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));

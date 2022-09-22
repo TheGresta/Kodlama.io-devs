@@ -2,7 +2,6 @@
 using Core.Application.Requests;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
-using Kodlama.Io.Devs.Application.Features.Users.Commands;
 using Kodlama.Io.Devs.Application.Features.Users.Models;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
@@ -20,16 +19,16 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUser
             private readonly IUserRepository _userRepository;
             private readonly IMapper _mapper;
             private readonly UserBusinessRules _userBusinessRules;
-            private readonly UserCommandCustomFunctions _userCommandCustomFunctions;
+            private readonly UserCustomFunctions _userCustomFunctions;
 
             public GetListUserQueryHandler(IUserRepository userRepository, IMapper mapper, 
                                             UserBusinessRules userBusinessRules, 
-                                            UserCommandCustomFunctions userCommandCustomFunctions)
+                                            UserCustomFunctions userCommandCustomFunctions)
             {
                 _userRepository = userRepository;
                 _mapper = mapper;
                 _userBusinessRules = userBusinessRules;
-                _userCommandCustomFunctions = userCommandCustomFunctions;
+                _userCustomFunctions = userCommandCustomFunctions;
             }
 
             public async Task<UserListModel> Handle(GetListUserQuery request, CancellationToken cancellationToken)
@@ -41,7 +40,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUser
 
                 UserListModel mappedUserListModel = _mapper.Map<UserListModel>(users);
 
-                _userCommandCustomFunctions.SetCommandUserDtoWhenGetListRequested(users, ref mappedUserListModel);
+                _userCustomFunctions.SetCommandUserDtoWhenGetListRequested(users, ref mappedUserListModel);
 
                 return mappedUserListModel;
             }

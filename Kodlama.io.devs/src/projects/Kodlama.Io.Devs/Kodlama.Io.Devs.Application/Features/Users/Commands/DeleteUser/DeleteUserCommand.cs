@@ -4,7 +4,6 @@ using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
 {
@@ -16,14 +15,17 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
             private readonly IUserRepository _userRepository;
             private readonly IMapper _mapper;
             private readonly UserBusinessRules _userBusinessRules;
-            private readonly UserCommandCustomFunctions _userCommandCustomFunctions;
+            private readonly UserCustomFunctions _userCustomFunctions;
 
-            public DeleteUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules, UserCommandCustomFunctions userCommandCustomFunctions)
+            public DeleteUserCommandHandler(IUserRepository userRepository, 
+                                            IMapper mapper, 
+                                            UserBusinessRules userBusinessRules, 
+                                            UserCustomFunctions userCommandCustomFunctions)
             {
                 _userRepository = userRepository;
                 _mapper = mapper;
                 _userBusinessRules = userBusinessRules;
-                _userCommandCustomFunctions = userCommandCustomFunctions;
+                _userCustomFunctions = userCommandCustomFunctions;
             }
 
             public async Task<CommandUserDto> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
@@ -34,8 +36,8 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.DeleteUser
                 User deletedUser = await _userRepository.DeleteAsync(user);
                 CommandUserDto mappedUserDto = new();
 
-                await _userCommandCustomFunctions.DeleteGitHubAddressWhenUserDeleted(deletedUser.Id);
-                await _userCommandCustomFunctions.DeleteAllUserOperationClaimsWhenUserDeleted(deletedUser.Id);
+                await _userCustomFunctions.DeleteGitHubAddressWhenUserDeleted(deletedUser.Id);
+                await _userCustomFunctions.DeleteAllUserOperationClaimsWhenUserDeleted(deletedUser.Id);
 
                 mappedUserDto = _mapper.Map<CommandUserDto>(deletedUser);
                 return mappedUserDto;
