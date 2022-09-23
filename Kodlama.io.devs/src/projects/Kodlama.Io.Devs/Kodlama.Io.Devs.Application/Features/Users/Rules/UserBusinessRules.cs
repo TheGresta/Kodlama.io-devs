@@ -1,6 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
+using Core.Security.Hashing;
 using Kodlama.Io.Devs.Application.Features.Users.Constants;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 
@@ -21,6 +22,18 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Rules
         {
             User? user = await _userRepository.GetAsync(u => u.Id == id);
             if (user == null) throw new BusinessException(_messages.IdDoesNotExist);
+        }
+
+        public async Task ThereShouldBeNoOtherUserWithGivenEmailWhenUserUpdated(int id, string email)
+        {
+            User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == email.ToLower() && u.Id != id);
+            if (user != null) throw new BusinessException(_messages.EmailAlreadyExist);
+        }
+
+        public async Task PasswordShouldBeValidWhenUserTryingToUpdateProfile(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            if (!HashingHelper.VerifyPasswordHash(password, passwordHash, passwordSalt))
+                throw new BusinessException(_messages.PasswordIsIncorrect);
         }
 
         public async Task UserShouldBeExistWithGivenEmailAddress(string email)

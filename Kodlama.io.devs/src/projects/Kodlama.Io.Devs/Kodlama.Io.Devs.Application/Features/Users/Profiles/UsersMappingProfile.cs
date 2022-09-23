@@ -14,6 +14,10 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Profiles
                 .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
                 .ReverseMap();
 
+            CreateMap<User, UpdatedUserDto>()
+                .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
+                .ReverseMap();
+
             CreateMap<User, GetByIdUserDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(u => $"{u.FirstName} {u.LastName}"))
                 .ReverseMap();
