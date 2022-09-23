@@ -6,11 +6,14 @@ using System.Reflection;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Features.OperationClaims.Rules;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
-using Kodlama.Io.Devs.Application.Features.Authorizations.Rules;
-using Kodlama.Io.Devs.Application.Features.GitHubs.Rules;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
 using Core.Application.Pipelines.Authorization;
+using Kodlama.Io.Devs.Application.Features.Users.Constants;
+using Kodlama.Io.Devs.Application.Features.DeveloperAuths.Rules;
+using Kodlama.Io.Devs.Application.Features.DeveloperAuths.Constants;
+using Kodlama.Io.Devs.Application.Features.UserAuths.Rules;
+using Kodlama.Io.Devs.Application.Features.UserAuths.Constants;
 
 namespace Application
 {
@@ -31,11 +34,14 @@ namespace Application
             services.AddScoped<UserOperationClaimBusinessRules>();
             services.AddScoped<UserOperationClaimBusinessRulesMessages>();
 
-            services.AddScoped<AuthorizationBusinessRules>();
-            services.AddScoped<AuthorizationBusinessRulesMessages>();
-
             services.AddScoped<UserBusinessRules>();
             services.AddScoped<UserBusinessRulesMessages>();
+
+            services.AddScoped<UserAuthBusinessRules>();
+            services.AddScoped<UserAuthBusinessRulesMessages>();
+
+            services.AddScoped<DeveloperAuthBusinessRules>();
+            services.AddScoped<DeveloperAuthBusinessRulesMessages>();
 
             services.AddScoped<LanguageTechnologyBusinessRules>();
             services.AddScoped<LanguageTechnologyBusinessRulesMessages>();

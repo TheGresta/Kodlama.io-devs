@@ -29,9 +29,9 @@ namespace Kodlama.Io.Devs.Application.Features.UserAuths.Rules
                 throw new BusinessException(_messages.PasswordIsIncorrect);
         }
 
-        public async Task EmailShouldNotBeAlreadyExistInTheUserTableWhenUserTryingToRegister(int id, string email)
+        public async Task EmailShouldNotBeAlreadyExistInTheUserTableWhenUserTryingToRegister(string email)
         {
-            User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == email.ToLower() && u.Id != id);
+            User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == email.ToLower());
             if (user != null) throw new BusinessException(_messages.EmailAlreadyExist);
         }
     }
