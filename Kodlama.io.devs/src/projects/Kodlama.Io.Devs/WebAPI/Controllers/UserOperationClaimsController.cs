@@ -34,8 +34,8 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getbyid/{Id}")]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdUserOperationClaimQuery getByIdUserOperationClaimQuery)
+        [HttpGet("getbyid")]
+        public async Task<IActionResult> GetById([FromQuery] GetByIdUserOperationClaimQuery getByIdUserOperationClaimQuery)
         {
             GetByIdUserOperationClaimDto result = await Mediator.Send(getByIdUserOperationClaimQuery);
             return Ok(result);
@@ -48,15 +48,15 @@ namespace WebAPI.Controllers
             return Created("", result);
         }
 
-        [HttpPut("update")]
+        [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] UpdateUserOperationClaimCommand updateUserOperationClaimCommand)
         {
             UpdatedUserOperationClaimDto result = await Mediator.Send(updateUserOperationClaimCommand);
             return Ok(result);
         }
 
-        [HttpDelete("delete/{Id}")]
-        public async Task<IActionResult> Delete([FromRoute] DeleteUserOperationClaimCommand deleteUserOperationClaimCommand)
+        [HttpGet("delete")]
+        public async Task<IActionResult> Delete([FromQuery] DeleteUserOperationClaimCommand deleteUserOperationClaimCommand)
         {
             DeletedUserOperationClaimDto result = await Mediator.Send(deleteUserOperationClaimCommand);
             return Ok(result);

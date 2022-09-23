@@ -11,7 +11,6 @@ using Kodlama.Io.Devs.Application.Features.UserAuths.Dtos;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 namespace Kodlama.Io.Devs.Application.Features.DeveloperAuths.Commands.RegisterDeveloperAuth
 {

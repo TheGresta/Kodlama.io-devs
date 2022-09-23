@@ -42,5 +42,12 @@ namespace WebAPI.Controllers
             UserListModel userListModel = await Mediator.Send(getListUserByDynamicQuery);
             return Ok(userListModel);
         }
+
+        [HttpGet("getselfprofile")]
+        public async Task<IActionResult> GetSelfProfile()
+        {
+            GetByIdUserDto getByIdUserDto = await Mediator.Send(new GetByIdUserQuery());
+            return Ok(getByIdUserDto);
+        }
     }
 }
