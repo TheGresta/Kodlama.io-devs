@@ -1,4 +1,4 @@
-﻿namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules
+﻿namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Constants
 {
     public class UserOperationClaimBusinessRulesMessages
     {

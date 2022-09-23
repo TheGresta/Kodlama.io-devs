@@ -43,8 +43,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUserName
 
                 await _userBusinessRules.PasswordShouldBeValidWhenUserTryingToUpdateProfile(request.Password, user.PasswordHash, user.PasswordSalt);
 
-                user.FirstName = request.FirstName;
-                user.LastName = request.LastName;
+                _mapper.Map(request, user);
 
                 User updatedUser = await _userRepository.UpdateAsync(user);
                 UpdatedUserDto mappedUserDto = _mapper.Map<UpdatedUserDto>(updatedUser);

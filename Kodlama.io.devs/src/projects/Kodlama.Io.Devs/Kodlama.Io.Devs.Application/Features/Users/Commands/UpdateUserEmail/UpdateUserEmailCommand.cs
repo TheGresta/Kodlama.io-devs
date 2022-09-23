@@ -43,7 +43,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUserEmail
                 await _userBusinessRules.ThereShouldBeNoOtherUserWithGivenEmailWhenUserUpdated(userId, request.Email);
                 await _userBusinessRules.PasswordShouldBeValidWhenUserTryingToUpdateProfile(request.Password, user.PasswordHash, user.PasswordSalt);
 
-                user.Email = request.Email;
+                _mapper.Map(request, user);
 
                 User updatedUser = await _userRepository.UpdateAsync(user);
                 UpdatedUserDto mappedUserDto = _mapper.Map<UpdatedUserDto>(updatedUser);

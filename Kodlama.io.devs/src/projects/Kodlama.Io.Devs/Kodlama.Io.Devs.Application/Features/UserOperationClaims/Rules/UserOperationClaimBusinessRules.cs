@@ -1,6 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
+using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Constants;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 
 namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules

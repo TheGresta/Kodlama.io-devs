@@ -1,6 +1,7 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
+using Kodlama.Io.Devs.Application.Features.OperationClaims.Constants;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 
 namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Rules
@@ -40,6 +41,5 @@ namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Rules
             UserOperationClaim? userOperationClaim = await _userOperationClaimRepository.GetAsync(o => o.OperationClaimId == id);
             if (userOperationClaim != null) throw new BusinessException(_messages.SomeUsersHaveThisOperationClaim);
         }
-
     }
 }

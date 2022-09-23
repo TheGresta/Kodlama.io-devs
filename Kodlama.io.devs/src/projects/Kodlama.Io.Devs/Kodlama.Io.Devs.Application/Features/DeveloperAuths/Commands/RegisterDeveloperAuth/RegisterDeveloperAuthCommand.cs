@@ -73,13 +73,17 @@ namespace Kodlama.Io.Devs.Application.Features.DeveloperAuths.Commands.RegisterD
 
             private async Task CreateUserOperationClaimForCreatedDeveloper(int userId)
             {
-                OperationClaim? operationClaim = await _operationClaimRepository.GetAsync(o => o.Name == "Developer");
+                OperationClaim? developerClaim = await _operationClaimRepository.GetAsync(o => o.Name == "Developer");
+                OperationClaim? userClaim = await _operationClaimRepository.GetAsync(o => o.Name == "User");
 
-                await _developerAuthBusinessRules.OperationClaimShouldBeExistAfterDeveloperCreated(operationClaim);
+                await _developerAuthBusinessRules.OperationClaimShouldBeExistAfterDeveloperCreated(developerClaim);
+                await _developerAuthBusinessRules.OperationClaimShouldBeExistAfterDeveloperCreated(userClaim);
 
-                UserOperationClaim userOperationClaim = new() { OperationClaimId = operationClaim.Id, UserId = userId };
+                UserOperationClaim developerUserOperationClaim = new() { OperationClaimId = developerClaim.Id, UserId = userId };
+                UserOperationClaim userUserOperationClaim = new() { OperationClaimId = userClaim.Id, UserId = userId };
 
-                await _userOperationClaimRepository.AddAsync(userOperationClaim);
+                await _userOperationClaimRepository.AddAsync(developerUserOperationClaim);
+                await _userOperationClaimRepository.AddAsync(userUserOperationClaim);
             }
         }
     }

@@ -33,11 +33,11 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUserByDynami
             public async Task<UserListModel> Handle(GetListUserByDynamicQuery request, CancellationToken cancellationToken)
             {
                 IPaginate<User>? users = await _userRepository.GetListByDynamicAsync(include: x => x.Include(u => u.UserOperationClaims)
-                                                                                           .ThenInclude(o => o.OperationClaim),
-                                                                            index: request.PageRequest.Page,
-                                                                            size: request.PageRequest.PageSize,
-                                                                            dynamic: request.Dynamic,
-                                                                            enableTracking: true);
+                                                                                                    .ThenInclude(o => o.OperationClaim),
+                                                                                    index: request.PageRequest.Page,
+                                                                                    size: request.PageRequest.PageSize,
+                                                                                    dynamic: request.Dynamic,
+                                                                                    enableTracking: true);
 
                 await _userBusinessRules.ThereShouldBeSomeDataInUserListAsRequired(users);
 

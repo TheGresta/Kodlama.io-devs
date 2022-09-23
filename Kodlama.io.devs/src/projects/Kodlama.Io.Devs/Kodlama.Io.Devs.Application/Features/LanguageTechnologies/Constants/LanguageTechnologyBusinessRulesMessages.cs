@@ -1,4 +1,4 @@
-﻿namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules
+﻿namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Constants
 {
     public class LanguageTechnologyBusinessRulesMessages
     {

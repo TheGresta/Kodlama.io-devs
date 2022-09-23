@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
+using Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUserEmail;
+using Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUserName;
 using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Models;
 
@@ -27,6 +29,12 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Profiles
                 .ReverseMap();
 
             CreateMap<IPaginate<User>, UserListModel>()
+                .ReverseMap();
+
+            CreateMap<User, UpdateUserEmailCommand>()
+                .ReverseMap();
+
+            CreateMap<User, UpdateUserNameCommand>()
                 .ReverseMap();
 
             CreateMap<UserOperationClaim, string>()                
