@@ -34,13 +34,8 @@ namespace Application
             services.AddScoped<AuthorizationBusinessRules>();
             services.AddScoped<AuthorizationBusinessRulesMessages>();
 
-            services.AddScoped<GitHubBusinessRules>();
-            services.AddScoped<GitHubBusinessRulesMessages>();
-
             services.AddScoped<UserBusinessRules>();
             services.AddScoped<UserBusinessRulesMessages>();
-
-            services.AddScoped<UserCustomFunctions>();
 
             services.AddScoped<LanguageTechnologyBusinessRules>();
             services.AddScoped<LanguageTechnologyBusinessRulesMessages>();

@@ -8,33 +8,29 @@ using MediatR;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUser
 {
-    public partial class UpdateUserCommand : IRequest<CommandUserDto>
+    public partial class UpdateUserCommand : IRequest<UpdatedUserDto>
     {
         public int Id { get; set; }
         public UserForRegisterDto UserForRegisterDto { get; set; }
-        public IList<int> OperationClaimIdList { get; set; }
-        public string GitHubName { get; set; }
 
-        public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, CommandUserDto>
+        public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdatedUserDto>
         {
             private readonly IUserRepository _userRepository;
             private readonly IMapper _mapper;
             private readonly IMediator _mediator;
             private readonly UserBusinessRules _userBusinessRules;
-            private readonly UserCustomFunctions _userCustomFunctions;
 
-            public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper,
-                                            UserBusinessRules userBusinessRules, IMediator mediator,
-                                            UserCustomFunctions userCommandCustomFunctions)
+            public UpdateUserCommandHandler(IUserRepository userRepository,
+                                            IMapper mapper,
+                                            UserBusinessRules userBusinessRules)
             {
                 _userRepository = userRepository;
                 _mapper = mapper;
                 _userBusinessRules = userBusinessRules;
                 _mediator = mediator;
-                _userCustomFunctions = userCommandCustomFunctions;
             }
 
-            public async Task<CommandUserDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+            public async Task<UpdatedUserDto> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
                 await _userBusinessRules.UserShouldBeExistWhenRequested(request.Id);
                 await _userBusinessRules.UserEmailCanNotBeDuplicatedWhenUpdated(request.Id, request.UserForRegisterDto.Email);

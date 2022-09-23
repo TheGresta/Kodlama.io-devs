@@ -34,5 +34,15 @@ namespace Kodlama.Io.Devs.Application.Features.Authorizations.Rules
             if (HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user.PasswordHash, user.PasswordSalt) == false)
                 throw new BusinessException(_message.WrongPassword);
         }
+
+        public async Task OperationClaimShouldBeExistForUserClaimWhenRegister(OperationClaim operationClaim)
+        {
+            if (operationClaim == null) throw new BusinessException(_message.OperationClaimDoesNotExistForUserClaim);
+        }
+
+        public async Task UserOperationClaimShouldBeAddedForUserClaimWhenRegister(UserOperationClaim userOperationClaim)
+        {
+            if (userOperationClaim == null) throw new BusinessException(_message.UserOperationClaimCouldNotBeAdded);
+        }
     }
 }

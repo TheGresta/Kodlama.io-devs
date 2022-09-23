@@ -12,8 +12,8 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<GitHub> GitHubs { get; set; }
         public DbSet<LanguageTechnology> LanguageTechnologies { get; set; }
+        public DbSet<Developer> Developers { get; set; }
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
@@ -38,9 +38,6 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
                 l.Property(l => l.Name).HasColumnName("Name");
                 l.HasMany(l => l.LanguageTechnologies);
             });
-
-            Language[] languageEntitySeeds = { new(1, "Java"), new(2, "C#"), new(3, "JavaScript") };
-            modelBuilder.Entity<Language>().HasData(languageEntitySeeds);
             #endregion
 
             #region LanguageTechnology Model Creation
@@ -52,11 +49,6 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
                 l.Property(l => l.LanguageId).HasColumnName("LanguageId");
                 l.HasOne(l => l.Language);
             });
-
-            LanguageTechnology[] languageTechnologyEntitySeeds = {
-                new(1, 1, "Spring"), new(2, 1, "JSP"), new(3, 2, "WPF"),
-                new(4, 2, "ASP.NET"), new(5, 3, "Vue"), new(6, 3, "React")};
-            modelBuilder.Entity<LanguageTechnology>().HasData(languageTechnologyEntitySeeds);
             #endregion
 
             #region OperationClaim Model Creation
@@ -100,14 +92,11 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
             });
             #endregion
 
-            #region GitHub Model Creation
-            modelBuilder.Entity<GitHub>(g =>
+            #region Developer Model Creation
+            modelBuilder.Entity<Developer>(g =>
             {
-                g.ToTable("GitHubs").HasKey(k => k.Id);
-                g.Property(g => g.Id).HasColumnName("Id");
-                g.Property(g => g.Name).HasColumnName("Name");
-                g.Property(g => g.UserId).HasColumnName("UserId");                
-                g.HasOne(g => g.User);
+                g.ToTable("Developers");
+                g.Property(g => g.GitHub).HasColumnName("GitHub");
             });
             #endregion
         }

@@ -5,6 +5,6 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Models
 {
     public class UserListModel : BasePageableModel
     {
-        public IList<CommandUserDto> Items { get; set; }
+        public IList<ListUserDto> Items { get; set; }
     }
 }

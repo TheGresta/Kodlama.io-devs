@@ -23,22 +23,6 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Commands.CreateUser
             RuleFor(r => r.UserForRegisterDto.Password).NotNull();
             RuleFor(r => r.UserForRegisterDto.Password).MinimumLength(5);
             RuleFor(r => r.UserForRegisterDto.Password).MaximumLength(25);
-
-            RuleFor(r => r.OperationClaimIdList).Must(list => list.Count > 0);
-            RuleFor(r => r.OperationClaimIdList).ForEach(i => i.GreaterThan(0));
-
-            RuleFor(r => r.GitHubName).Must(g => CheckGitHubName(g)).WithMessage("GitHub name should be empty or between 5 - 20 size.");
-        }
-
-        private bool CheckGitHubName(string gitHubName)
-        {
-            if (gitHubName == null || gitHubName == "")
-                return true;
-
-            if (gitHubName.Length >= 5 && gitHubName.Length <= 20)
-                return true;
-
-            return false;
         }
     }
 }
