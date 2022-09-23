@@ -21,5 +21,10 @@ namespace Kodlama.Io.Devs.Application.Features.DeveloperAuths.Rules
             User? user = await _userRepository.GetAsync(u => u.Email.ToLower() == email.ToLower());
             if (user != null) throw new BusinessException(_messages.EmailAlreadyExist);
         }
+
+        public async Task OperationClaimShouldBeExistAfterDeveloperCreated(OperationClaim operationClaim)
+        {
+            if (operationClaim == null) throw new BusinessException(_messages.OperationClaimDoesNotExist);
+        }
     }
 }

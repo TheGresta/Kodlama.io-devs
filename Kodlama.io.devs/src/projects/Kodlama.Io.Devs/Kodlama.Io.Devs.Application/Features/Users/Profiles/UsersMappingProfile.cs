@@ -25,9 +25,7 @@ namespace Kodlama.Io.Devs.Application.Features.Users.Profiles
             CreateMap<IPaginate<User>, UserListModel>()
                 .ReverseMap();
 
-            CreateMap<ICollection<UserOperationClaim>, ICollection<string>>();
-
-            CreateMap<UserOperationClaim, string>()
+            CreateMap<UserOperationClaim, string>()                
                 .ConvertUsing(u => u.OperationClaim.Name);
         }
     }

@@ -7,6 +7,7 @@ using Kodlama.Io.Devs.Application.Features.Users.Models;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUserByDynamic
