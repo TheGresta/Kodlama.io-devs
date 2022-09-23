@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUser
 {
-    public partial class GetListUserQuery : IRequest<UserListModel>
+    public partial class GetListUserQuery : IRequest<UserListModel>, ISecuredRequest
     {
         public PageRequest PageRequest { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
 
         public class GetListUserQueryHandler : IRequestHandler<GetListUserQuery, UserListModel>
         {

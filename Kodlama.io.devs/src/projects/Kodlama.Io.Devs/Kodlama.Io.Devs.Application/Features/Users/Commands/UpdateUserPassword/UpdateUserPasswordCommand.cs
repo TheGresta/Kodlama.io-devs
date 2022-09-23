@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Core.Security.Extensions;
 using Core.Security.Hashing;
@@ -10,10 +11,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUserPassword
 {
-    public partial class UpdateUserPasswordCommand : IRequest<UpdatedUserDto>
+    public partial class UpdateUserPasswordCommand : IRequest<UpdatedUserDto>, ISecuredRequest
     {
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
+
+        public string[] Roles => new[] { "Admin", "User" };
 
         public class UpdateUserPasswordCommandHandler : IRequestHandler<UpdateUserPasswordCommand, UpdatedUserDto>
         {

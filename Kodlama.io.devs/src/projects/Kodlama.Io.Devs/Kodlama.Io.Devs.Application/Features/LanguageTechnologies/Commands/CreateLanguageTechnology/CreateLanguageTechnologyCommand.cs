@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Dtos;
 using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
@@ -8,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Commands.CreateLanguageTechnology
 {
-    public partial class CreateLanguageTechnologyCommand : IRequest<CreatedLanguageTechnologyDto>
+    public partial class CreateLanguageTechnologyCommand : IRequest<CreatedLanguageTechnologyDto>, ISecuredRequest
     {
         public int LanguageId { get; set; }
         public string Name { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
     }
 
     public class CreateLanguageTechnologyCommandHandler : IRequestHandler<CreateLanguageTechnologyCommand, CreatedLanguageTechnologyDto>

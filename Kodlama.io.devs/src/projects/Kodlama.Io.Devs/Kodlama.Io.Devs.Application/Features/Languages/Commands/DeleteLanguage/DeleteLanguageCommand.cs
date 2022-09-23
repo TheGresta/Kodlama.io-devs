@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Persistence.Paging;
 using Kodlama.Io.Devs.Application.Features.Languages.Dtos;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.DeleteLanguage
 {
-    public partial class DeleteLanguageCommand : IRequest<DeletedLanguageDto>
+    public partial class DeleteLanguageCommand : IRequest<DeletedLanguageDto>, ISecuredRequest
     {
         public int Id { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
 
         public class DeleteLanguageCommandHandler : IRequestHandler<DeleteLanguageCommand, DeletedLanguageDto>
         {

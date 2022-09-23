@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
@@ -11,10 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Queries.GetListLanguageTechnologyByDynamic
 {
-    public partial class GetListLanguageTechnologyByDynamicQuery : IRequest<LanguageTechnologyListModel>
+    public partial class GetListLanguageTechnologyByDynamicQuery : IRequest<LanguageTechnologyListModel>, ISecuredRequest
     {
         public Dynamic Dynamic { get; set; }
         public PageRequest PageRequest { get; set; }
+
+        public string[] Roles => new[] { "Admin", "User" };
 
         public class GetListLanguageTechnologyByDynamicQueryHandler : IRequestHandler<GetListLanguageTechnologyByDynamicQuery, LanguageTechnologyListModel>
         {

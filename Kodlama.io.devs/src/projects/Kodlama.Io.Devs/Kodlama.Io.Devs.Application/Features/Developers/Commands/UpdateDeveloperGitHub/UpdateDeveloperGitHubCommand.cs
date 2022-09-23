@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Extensions;
 using Kodlama.Io.Devs.Application.Features.Developers.Dtos;
 using Kodlama.Io.Devs.Application.Features.Developers.Rules;
@@ -9,9 +10,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace Kodlama.Io.Devs.Application.Features.Developers.Commands.UpdateDeveloperGitHub
 {
-    public partial class UpdateDeveloperGitHubCommand : IRequest<DeveloperProfileDto>
+    public partial class UpdateDeveloperGitHubCommand : IRequest<DeveloperProfileDto>, ISecuredRequest
     {
         public string GitHub { get; set; }
+
+        public string[] Roles => new[] {"Admin", "Developer"};
 
         public class UpdateDeveloperGitHubCommandHandler : IRequestHandler<UpdateDeveloperGitHubCommand, DeveloperProfileDto>
         {

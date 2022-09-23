@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Persistence.Dynamic;
 using Core.Persistence.Paging;
@@ -12,10 +13,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetListUserByDynamic
 {
-    public partial class GetListUserByDynamicQuery : IRequest<UserListModel>
+    public partial class GetListUserByDynamicQuery : IRequest<UserListModel>, ISecuredRequest
     {
         public Dynamic Dynamic { get; set; }
         public PageRequest PageRequest { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
 
         public class GetListUserByDynamicQueryHandler : IRequestHandler<GetListUserByDynamicQuery, UserListModel>
         {

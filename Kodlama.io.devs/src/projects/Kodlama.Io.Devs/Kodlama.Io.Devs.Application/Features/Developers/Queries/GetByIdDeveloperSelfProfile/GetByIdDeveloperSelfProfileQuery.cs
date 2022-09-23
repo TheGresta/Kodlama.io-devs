@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Extensions;
 using Kodlama.Io.Devs.Application.Features.Developers.Dtos;
 using Kodlama.Io.Devs.Application.Features.Developers.Rules;
@@ -9,8 +10,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace Kodlama.Io.Devs.Application.Features.Developers.Queries.GetByIdDeveloperSelfProfile
 {
-    public partial class GetByIdDeveloperSelfProfileQuery : IRequest<DeveloperProfileDto>
+    public partial class GetByIdDeveloperSelfProfileQuery : IRequest<DeveloperProfileDto>, ISecuredRequest
     {
+        public string[] Roles => new[] {"Admin", "Developer"};
+
         public class GetByIdDeveloperSelfProfileQueryHandler : IRequestHandler<GetByIdDeveloperSelfProfileQuery, DeveloperProfileDto>
         {
             private readonly IDeveloperRepository _developerRepository;

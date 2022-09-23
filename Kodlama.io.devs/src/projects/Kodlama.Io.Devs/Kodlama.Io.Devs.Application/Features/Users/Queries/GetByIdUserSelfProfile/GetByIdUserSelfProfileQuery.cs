@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Core.Security.Extensions;
 using Kodlama.Io.Devs.Application.Features.Users.Dtos;
@@ -10,8 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetByIdUserSelfProfile
 {
-    public class GetByIdUserSelfProfileQuery : IRequest<GetByIdUserDto>
+    public class GetByIdUserSelfProfileQuery : IRequest<GetByIdUserDto>, ISecuredRequest
     {
+        public string[] Roles => new[] { "Admin", "User" };
+
         public class GetByIdUserSelfProfileQueryHandler : IRequestHandler<GetByIdUserSelfProfileQuery, GetByIdUserDto>
         {
             private readonly IUserRepository _userRepository;

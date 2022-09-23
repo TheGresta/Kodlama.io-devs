@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Kodlama.Io.Devs.Application.Features.Languages.Dtos;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
@@ -8,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetByIdLanguage
 {
-    public class GetByIdLanguageQuery : IRequest<GetByIdLanguageDto>
+    public class GetByIdLanguageQuery : IRequest<GetByIdLanguageDto>, ISecuredRequest
     {
         public int Id { get; set; }
+
+        public string[] Roles => new[] { "Admin", "User" };
+
         public class GetByIdLanguageQueryHandler : IRequestHandler<GetByIdLanguageQuery, GetByIdLanguageDto>
         {
             private readonly ILanguageRepository _languageRepository;

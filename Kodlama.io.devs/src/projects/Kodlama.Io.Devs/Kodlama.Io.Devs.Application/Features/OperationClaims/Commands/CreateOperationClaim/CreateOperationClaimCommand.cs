@@ -4,12 +4,15 @@ using Kodlama.Io.Devs.Application.Services.Repositories;
 using MediatR;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.OperationClaims.Rules;
+using Core.Application.Pipelines.Authorization;
 
 namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Commands.CreateOperationClaim
 {
-    public partial class CreateOperationClaimCommand : IRequest<CreatedOperationClaimDto>
+    public partial class CreateOperationClaimCommand : IRequest<CreatedOperationClaimDto>, ISecuredRequest
     {
         public string Name { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
 
         public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, CreatedOperationClaimDto>
         {

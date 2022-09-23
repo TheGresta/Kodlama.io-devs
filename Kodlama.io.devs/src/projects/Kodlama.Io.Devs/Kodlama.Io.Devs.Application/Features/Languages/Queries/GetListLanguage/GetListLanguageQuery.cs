@@ -7,12 +7,16 @@ using Kodlama.Io.Devs.Application.Services.Repositories;
 using Kodlama.Io.Devs.Domain.Entities;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Microsoft.EntityFrameworkCore;
+using Core.Application.Pipelines.Authorization;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Queries.GetListLanguage
 {
-    public class GetListLanguageQuery : IRequest<LanguageListModel>
+    public class GetListLanguageQuery : IRequest<LanguageListModel>, ISecuredRequest
     {
         public PageRequest PageRequest { get; set; }
+
+        public string[] Roles => new[] { "Admin", "User" };
+
         public class GetListLanguageQueryHandler : IRequestHandler<GetListLanguageQuery, LanguageListModel>
         {
             private readonly ILanguageRepository _languageRepository;

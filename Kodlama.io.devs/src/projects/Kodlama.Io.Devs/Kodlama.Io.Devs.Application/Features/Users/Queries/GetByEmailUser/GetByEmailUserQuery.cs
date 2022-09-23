@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.Users.Dtos;
 using Kodlama.Io.Devs.Application.Features.Users.Rules;
@@ -8,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Queries.GetByEmailUser
 {
-    public partial class GetByEmailUserQuery : IRequest<GetByEmailUserDto>
+    public partial class GetByEmailUserQuery : IRequest<GetByEmailUserDto>, ISecuredRequest
     {
         public string Email { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
+
         public class GetByEmailUserQueryHandler : IRequestHandler<GetByEmailUserQuery, GetByEmailUserDto>
         {
             private readonly IUserRepository _userRepository;

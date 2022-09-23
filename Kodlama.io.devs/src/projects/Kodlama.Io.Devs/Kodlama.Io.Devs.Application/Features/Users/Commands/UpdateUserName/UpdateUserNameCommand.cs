@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Core.Security.Extensions;
 using Kodlama.Io.Devs.Application.Features.Users.Dtos;
@@ -9,11 +10,13 @@ using Microsoft.AspNetCore.Http;
 
 namespace Kodlama.Io.Devs.Application.Features.Users.Commands.UpdateUserName
 {
-    public partial class UpdateUserNameCommand : IRequest<UpdatedUserDto>
+    public partial class UpdateUserNameCommand : IRequest<UpdatedUserDto>, ISecuredRequest
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
+
+        public string[] Roles => new[] { "Admin", "User" };
 
         public class UpdateUserEmailCommandHandler : IRequestHandler<UpdateUserNameCommand, UpdatedUserDto>
         {

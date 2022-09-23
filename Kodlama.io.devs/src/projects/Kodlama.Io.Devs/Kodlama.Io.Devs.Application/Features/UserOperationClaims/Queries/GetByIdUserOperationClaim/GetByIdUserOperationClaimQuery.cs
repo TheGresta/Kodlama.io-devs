@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Security.Entities;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Dtos;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules;
@@ -8,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Queries.GetByIdUserOperationClaim
 {
-    public partial class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaimDto>
+    public partial class GetByIdUserOperationClaimQuery : IRequest<GetByIdUserOperationClaimDto>, ISecuredRequest
     {
         public int Id { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
 
         public class GetByIdUserOperationClaimQueryHandler : IRequestHandler<GetByIdUserOperationClaimQuery, GetByIdUserOperationClaimDto>
         {

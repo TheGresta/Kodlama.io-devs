@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Kodlama.Io.Devs.Application.Features.Languages.Dtos;
 using Kodlama.Io.Devs.Application.Features.Languages.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
@@ -8,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kodlama.Io.Devs.Application.Features.Languages.Commands.CreateLanguage
 {
-    public partial class CreateLanguageCommand : IRequest<CreatedLanguageDto>
+    public partial class CreateLanguageCommand : IRequest<CreatedLanguageDto>, ISecuredRequest
     {
         public string Name { get; set; }
+
+        public string[] Roles => new[] { "Admin"};
 
         public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, CreatedLanguageDto>
         {

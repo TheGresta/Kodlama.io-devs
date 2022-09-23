@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Requests;
 using Core.Persistence.Paging;
 using Core.Security.Entities;
@@ -9,9 +10,11 @@ using MediatR;
 
 namespace Kodlama.Io.Devs.Application.Features.OperationClaims.Queries.GetListOperationClaim
 {
-    public partial class GetListOperationClaimQuery : IRequest<OperationClaimListModel>
+    public partial class GetListOperationClaimQuery : IRequest<OperationClaimListModel>, ISecuredRequest
     {
         public PageRequest PageRequest { get; set; }
+
+        public string[] Roles => new[] { "Admin" };
 
         public class GetListOperationClaimQueryHandler : IRequestHandler<GetListOperationClaimQuery, OperationClaimListModel>
         {
