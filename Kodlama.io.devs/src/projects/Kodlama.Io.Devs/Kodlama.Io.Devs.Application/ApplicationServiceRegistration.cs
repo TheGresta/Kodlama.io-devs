@@ -14,6 +14,8 @@ using Kodlama.Io.Devs.Application.Features.DeveloperAuths.Rules;
 using Kodlama.Io.Devs.Application.Features.DeveloperAuths.Constants;
 using Kodlama.Io.Devs.Application.Features.UserAuths.Rules;
 using Kodlama.Io.Devs.Application.Features.UserAuths.Constants;
+using Kodlama.Io.Devs.Application.Features.Developers.Rules;
+using Kodlama.Io.Devs.Application.Features.Developers.Constants;
 
 namespace Application
 {
@@ -42,6 +44,9 @@ namespace Application
 
             services.AddScoped<DeveloperAuthBusinessRules>();
             services.AddScoped<DeveloperAuthBusinessRulesMessages>();
+
+            services.AddScoped<DeveloperBusinessRules>();
+            services.AddScoped<DeveloperBusinessRulesMessages>();
 
             services.AddScoped<LanguageTechnologyBusinessRules>();
             services.AddScoped<LanguageTechnologyBusinessRulesMessages>();
