@@ -1,7 +1,7 @@
 ﻿namespace Kodlama.Io.Devs.Application.Features.Developers.Constants
 {
-    public class DeveloperBusinessRulesMessages
+    public static class DeveloperBusinessRulesMessages
     {
-        public string IdDoesNotExist => "There is no any user with given Id in the system!";
+        public static string IdDoesNotExist => "There is no any user with given Id in the system!";
     }
 }
