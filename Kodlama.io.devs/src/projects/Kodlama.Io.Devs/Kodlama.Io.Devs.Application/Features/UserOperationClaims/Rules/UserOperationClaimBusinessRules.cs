@@ -34,6 +34,11 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Rules
             if (operationClaim == null) throw new BusinessException(_messages.OperationClaimDoesNotExist);
         }
 
+        public async Task OperationClaimCanNotBeNullWhenRequested(OperationClaim operationClaim)
+        {
+            if (operationClaim == null) throw new BusinessException(_messages.OperationClaimDoesNotExist);
+        }
+
         public async Task UserShouldBeExistWhenRequested(int id)
         {
             User? user = await _userRepository.GetAsync(o => o.Id == id);
