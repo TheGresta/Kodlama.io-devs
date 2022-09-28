@@ -55,6 +55,8 @@ namespace Application
             services.AddScoped<LanguageTechnologyBusinessRules>();
             services.AddScoped<LanguageTechnologyBusinessRulesMessages>();
 
+            services.AddScoped<DeveloperOperationClaims>();
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
