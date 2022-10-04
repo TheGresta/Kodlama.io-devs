@@ -14,18 +14,12 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<LanguageTechnology> LanguageTechnologies { get; set; }
         public DbSet<Developer> Developers { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
         {
             Configuration = configuration;
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //if (!optionsBuilder.IsConfigured)
-            //    base.OnConfiguring(
-            //        optionsBuilder.UseSqlServer(Configuration.GetConnectionString("SomeConnectionString")));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -77,6 +71,24 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
                 u.Property(u => u.AuthenticatorType).HasColumnName("AuthenticatorType");
                 u.HasMany(u => u.UserOperationClaims);
                 u.HasMany(u => u.RefreshTokens);
+            });
+            #endregion
+
+            #region RefreshToken Model Creation
+            modelBuilder.Entity<RefreshToken>(u =>
+            {
+                u.ToTable("RefreshTokens").HasKey(k => k.Id);
+                u.Property(u => u.Id).HasColumnName("Id");
+                u.Property(u => u.UserId).HasColumnName("UserId");
+                u.Property(u => u.Token).HasColumnName("Token");
+                u.Property(u => u.Expires).HasColumnName("ExpiresTime");
+                u.Property(u => u.Created).HasColumnName("CreatedTime");
+                u.Property(u => u.CreatedByIp).HasColumnName("CreatedByIp");
+                u.Property(u => u.Revoked).HasColumnName("RevokedTime");
+                u.Property(u => u.RevokedByIp).HasColumnName("RevokedByIp");
+                u.Property(u => u.ReplacedByToken).HasColumnName("ReplacedByToken");
+                u.Property(u => u.ReasonRevoked).HasColumnName("ReasonRevoked");
+                u.HasOne(u => u.User);                
             });
             #endregion
 
