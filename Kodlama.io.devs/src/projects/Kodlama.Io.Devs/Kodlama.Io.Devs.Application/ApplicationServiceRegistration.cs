@@ -20,6 +20,7 @@ using Kodlama.Io.Devs.Application.Features.Languages.Costants;
 using Kodlama.Io.Devs.Application.Features.LanguageTechnologies.Constants;
 using Kodlama.Io.Devs.Application.Features.OperationClaims.Constants;
 using Kodlama.Io.Devs.Application.Features.UserOperationClaims.Constants;
+using Kodlama.Io.Devs.Application.Services.UserAuthService;
 
 namespace Application
 {
@@ -56,6 +57,8 @@ namespace Application
             services.AddScoped<LanguageTechnologyBusinessRulesMessages>();
 
             services.AddScoped<DeveloperOperationClaims>();
+
+            services.AddScoped<IUserAuthService, UserAuthService>();
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));

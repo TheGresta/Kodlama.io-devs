@@ -23,6 +23,7 @@ namespace Kodlama.Io.Devs.Persistence
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ILanguageTechnologyRepository, LanguageTechnologyRepository>();
             services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             return services;
         }
