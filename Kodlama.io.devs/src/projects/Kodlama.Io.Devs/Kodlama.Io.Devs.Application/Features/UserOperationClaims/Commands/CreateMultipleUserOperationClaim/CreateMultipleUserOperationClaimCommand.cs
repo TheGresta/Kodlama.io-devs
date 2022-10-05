@@ -35,7 +35,10 @@ namespace Kodlama.Io.Devs.Application.Features.UserOperationClaims.Commands.Crea
             {
                 await _userOperationClaimBusinessRules.UserShouldBeExistWhenRequested(request.UserId);
 
-                CreatedMultipleUserOperationClaimDto createdMultipleUserOperationClaimDto = new();
+                CreatedMultipleUserOperationClaimDto createdMultipleUserOperationClaimDto = new()
+                {
+                    CreatedMultipleUserOperationClaimDtos = new List<CreatedUserOperationClaimDto>()
+                };
 
                 foreach(string role in request.RoleNames)
                 {

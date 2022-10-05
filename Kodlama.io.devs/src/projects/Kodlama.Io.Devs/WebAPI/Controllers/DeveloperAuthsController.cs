@@ -10,7 +10,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class DeveloperAuthsController : BaseController
     {
-        [HttpPost("register/developer")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
             RegisterDeveloperAuthCommand registerDeveloperAuthCommand = new() 

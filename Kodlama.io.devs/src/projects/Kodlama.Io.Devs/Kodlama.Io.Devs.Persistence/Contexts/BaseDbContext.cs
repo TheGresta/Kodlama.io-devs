@@ -53,7 +53,7 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
                 o.Property(o => o.Name).HasColumnName("Name");
             });
 
-            OperationClaim[] operationClaimEntitySeeds = { new(1, "Admin"), new(2, "User"), new(3, "Visitor") };
+            OperationClaim[] operationClaimEntitySeeds = { new(1, "Admin"), new(2, "User"), new(3, "Visitor"), new(4, "Developer") };
             modelBuilder.Entity<OperationClaim>().HasData(operationClaimEntitySeeds);
             #endregion
 
