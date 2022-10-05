@@ -45,9 +45,9 @@ namespace Kodlama.Io.Devs.Application.Services.UserAuthService
 
         public async Task<AccessToken> CreateAccessToken(User user)
         {
-            ​IPaginate<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository
-                                                                        .GetListAsync(u => u.UserId == user.Id, include:
-                                                                                      u => u.Include(u => u.OperationClaim));
+            IPaginate<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository
+                                                                            .GetListAsync(u => u.UserId == user.Id,
+                                                                                          include: u => u.Include(u => u.OperationClaim));
 
             IList<OperationClaim> operationClaims =
             userOperationClaims.Items.Select(u => new OperationClaim

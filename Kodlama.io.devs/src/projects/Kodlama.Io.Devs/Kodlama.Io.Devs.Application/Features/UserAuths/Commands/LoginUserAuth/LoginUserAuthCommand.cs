@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Core.Security.Dtos;
 using Core.Security.Entities;
-using Kodlama.Io.Devs.Application.Features.UserAuths.Commands.CreateAccessTokeUserAuth;
+using Core.Security.JWT;
+using Kodlama.Io.Devs.Application.Features.DeveloperAuths.Dtos;
 using Kodlama.Io.Devs.Application.Features.UserAuths.Dtos;
 using Kodlama.Io.Devs.Application.Features.UserAuths.Rules;
 using Kodlama.Io.Devs.Application.Services.Repositories;
+using Kodlama.Io.Devs.Application.Services.UserAuthService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,20 +15,24 @@ namespace Kodlama.Io.Devs.Application.Features.UserAuths.Commands.LoginUserAuth
     public class LoginUserAuthCommand : IRequest<LoginUserAuthResultDto>
     {
         public UserForLoginDto UserForLoginDto { get; set; }
+        public string IpAddress { get; set; }
 
         public class LoginUserAuthCommandHandler : IRequestHandler<LoginUserAuthCommand, LoginUserAuthResultDto>
         {
-            private readonly IMapper _mapper;
             private readonly UserAuthBusinessRules _userAuthBusinessRules;
             private readonly IUserRepository _userRepository;
             private readonly IMediator _mediator;
+            private readonly IUserAuthService _userAuthService;
 
-            public LoginUserAuthCommandHandler(IMapper mapper, UserAuthBusinessRules userAuthBusinessRules, IUserRepository userRepository, IMediator mediator)
+            public LoginUserAuthCommandHandler(UserAuthBusinessRules userAuthBusinessRules,
+                                               IUserRepository userRepository,
+                                               IMediator mediator,
+                                               IUserAuthService userAuthService)
             {
-                _mapper = mapper;
                 _userAuthBusinessRules = userAuthBusinessRules;
                 _userRepository = userRepository;
                 _mediator = mediator;
+                _userAuthService = userAuthService;
             }
 
             public async Task<LoginUserAuthResultDto> Handle(LoginUserAuthCommand request, CancellationToken cancellationToken)
@@ -38,9 +44,15 @@ namespace Kodlama.Io.Devs.Application.Features.UserAuths.Commands.LoginUserAuth
 
                 await _userAuthBusinessRules.PasswordShouldBeValidWhenUserTryingToLogin(request.UserForLoginDto.Password, user.PasswordHash, user.PasswordSalt);
 
-                CreateAccessTokenUserAuthCommand createAccessTokenUserAuthCommand = new() { User = user };
-                CreateAccessTokenUserAuthResultDto createAccessTokenUserAuthResultDto = await _mediator.Send(createAccessTokenUserAuthCommand);
-                LoginUserAuthResultDto loginUserAuthResultDto = _mapper.Map<LoginUserAuthResultDto>(createAccessTokenUserAuthResultDto);
+                AccessToken createdAccessToken = await _userAuthService.CreateAccessToken(user);
+                RefreshToken createdRefreshToken = await _userAuthService.CreateRefreshToken(user, request.IpAddress);
+                RefreshToken addedRefreshToken = await _userAuthService.AddRefreshToken(createdRefreshToken);
+
+                LoginUserAuthResultDto loginUserAuthResultDto = new()
+                {
+                    RefreshToken = addedRefreshToken,
+                    AccessToken = createdAccessToken
+                };
 
                 return loginUserAuthResultDto;
             }
