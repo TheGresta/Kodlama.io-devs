@@ -1,4 +1,5 @@
 ﻿using Core.Security.Entities;
+using Core.Security.Hashing;
 using Kodlama.Io.Devs.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -52,9 +53,6 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
                 o.Property(o => o.Id).HasColumnName("Id");
                 o.Property(o => o.Name).HasColumnName("Name");
             });
-
-            OperationClaim[] operationClaimEntitySeeds = { new(1, "Admin"), new(2, "User"), new(3, "Visitor"), new(4, "Developer") };
-            modelBuilder.Entity<OperationClaim>().HasData(operationClaimEntitySeeds);
             #endregion
 
             #region User Model Creation
@@ -111,6 +109,60 @@ namespace Kodlama.Io.Devs.Persistence.Contexts
                 g.Property(g => g.GitHub).HasColumnName("GitHub");
             });
             #endregion
+
+
+            #region Language Entity Seeds
+            Language[] languageEntitySeeds = { new(1, "C#"), new(2, "Java"), new(3, "JavaScript") };
+            modelBuilder.Entity<Language>().HasData(languageEntitySeeds);
+            #endregion
+
+            #region LanguageTechnology Entity Seeds
+            LanguageTechnology[] languageTechnologyEntitySeeds = { new(1, 1, "WPF"), new(2, 1, "ASP.NET"),
+                                                                   new(3, 2, "Spring"), new(4, 2, "JSP"),
+                                                                   new(5, 3, "Vue"), new(6, 3, "React") };
+            modelBuilder.Entity<LanguageTechnology>().HasData(languageTechnologyEntitySeeds);
+            #endregion
+
+            #region OperationClaim Entity Seeds
+            OperationClaim[] operationClaimEntitySeeds = { new(1, "Admin"), new(2, "User"), 
+                                                           new(3, "Visitor"), new(4, "Developer") };
+            modelBuilder.Entity<OperationClaim>().HasData(operationClaimEntitySeeds);
+            #endregion
+
+            #region User Entity Seeds
+            User[] userEntitySeeds = { GetAdminUser() };
+            modelBuilder.Entity<User>().HasData(userEntitySeeds);
+            #endregion
+
+            #region UserOperationClaim Entity Seeds
+            UserOperationClaim[] userOperationClaimEntitySeeds = { new(1, 1, 1) };
+            modelBuilder.Entity<UserOperationClaim>().HasData(userOperationClaimEntitySeeds);
+            #endregion
+        }
+
+        private User GetAdminUser()
+        {
+            byte[] passwordHash, passwordSalt;
+            string password = configuration().GetSection("AdminUser:Password").Value;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            return new()
+            {
+                Id = 1,
+                FirstName = configuration().GetSection("AdminUser:FirstName").Value,
+                LastName = configuration().GetSection("AdminUser:LastName").Value,
+                Email = configuration().GetSection("AdminUser:Email").Value,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = true,
+                AuthenticatorType = Core.Security.Enums.AuthenticatorType.Email,
+            };
+        }
+
+        private IConfigurationRoot configuration()
+        {
+            return new ConfigurationManager()
+                .AddJsonFile("appsettings.json").Build();
         }
     }
 }

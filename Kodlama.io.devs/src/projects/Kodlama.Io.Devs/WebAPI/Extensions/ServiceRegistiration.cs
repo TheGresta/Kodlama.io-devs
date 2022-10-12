@@ -11,6 +11,8 @@ namespace WebAPI.Extensions
         public static IServiceCollection AddRegistirationServices(this IServiceCollection services, WebApplicationBuilder builder)
         {
             TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            string adminEmail = builder.Configuration.GetSection("AdminUser:Email").Value;
+            string adminPassword = builder.Configuration.GetSection("AdminUser:Password").Value;
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -29,6 +31,12 @@ namespace WebAPI.Extensions
 
             services.AddSwaggerGen(opt =>
             {
+                opt.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "JWTToken_Auth_API",
+                    Description = $"Demo Admin Login\r\n\r\nEmail: {adminEmail}\r\n\r\nPassword: {adminPassword}",
+                    Version = "v1"
+                });
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
