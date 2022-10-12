@@ -40,7 +40,7 @@ ConnectionStrings": {
     "Issuer": "Gresta",
     "AccessTokenExpiration": 30,
     "SecurityKey": "jKr1u.JDX5E14ZDs.K5ph8j7zEB.Vz82Mk",
-    "RefreshTokenTTL": 0
+    "RefreshTokenTTL": 2
   }
 ```
 
