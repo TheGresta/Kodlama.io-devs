@@ -24,6 +24,19 @@ ConnectionStrings": {
 
 ---
 
+### :arrow_double_down: Configure admin user in appsettings.json :arrow_double_down:
+
+``` ruby
+"AdminUser": {
+    "FirstName": "admin_first_name",
+    "LastName": "admin_last_name",
+    "Email": "admin@hotmail.com",
+    "Password": "12345"
+  }
+```
+
+---
+
 ### :arrow_double_down: Create migration and database in package manager console :arrow_double_down:
 
 <p align="left">
