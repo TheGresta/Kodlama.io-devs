@@ -6,12 +6,10 @@ namespace Core.Mailing.MailKitImplementations;
 
 public class MailKitMailService : IMailService
 {
-    private IConfiguration _configuration;
     private readonly MailSettings _mailSettings;
 
     public MailKitMailService(IConfiguration configuration)
     {
-        _configuration = configuration;
         _mailSettings = configuration.GetSection("MailSettings").Get<MailSettings>();
     }
 

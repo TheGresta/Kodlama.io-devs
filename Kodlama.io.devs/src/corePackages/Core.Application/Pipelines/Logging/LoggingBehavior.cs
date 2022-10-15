@@ -19,8 +19,8 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken,
-                                  RequestHandlerDelegate<TResponse> next)
+    public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+                                                    CancellationToken cancellationToken)
     {
         List<LogParameter> logParameters = new();
         logParameters.Add(new LogParameter
